@@ -50,4 +50,9 @@ public class Aldo {
         request(command: command.rawValue, parameters: parameters, callback: callback)
     }
     
+    static func requestAuthToken(callback: Callback) {
+        let command: Command = Command.REQUEST_AUTH_TOKEN
+        request(command: command, parameters: [:], callback: callback)
+    }
+    
 }
