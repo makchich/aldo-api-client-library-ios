@@ -1,0 +1,6 @@
+framework module Pods_Aldo_Example {
+  umbrella header "Pods-Aldo_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

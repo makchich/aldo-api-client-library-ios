@@ -1,6 +1,6 @@
-# Aldo
+# Aldo APIs Client Library for iOS
 
-[![CI Status](http://img.shields.io/travis/makchich/Aldo.svg?style=flat)](https://travis-ci.org/makchich/Aldo)
+[![CI Status](http://img.shields.io/travis/makchich/Aldo.svg?style=flat)](https://travis-ci.org/makchich/aldo-api-client-library-ios)
 [![Version](https://img.shields.io/cocoapods/v/Aldo.svg?style=flat)](http://cocoapods.org/pods/Aldo)
 [![License](https://img.shields.io/cocoapods/l/Aldo.svg?style=flat)](http://cocoapods.org/pods/Aldo)
 [![Platform](https://img.shields.io/cocoapods/p/Aldo.svg?style=flat)](http://cocoapods.org/pods/Aldo)
@@ -20,9 +20,12 @@ it, simply add the following line to your Podfile:
 pod "Aldo"
 ```
 
-## Author
+## Authors
 
-makchich, m.akchich@student.tudelft.nl
+Mohamed Akchich, m.akchich@student.tudelft.nl 
+Stephan Dumasy, S.N.Dumasy@student.tudelft.nl  
+Benjamin Los, B.E.Los@student.tudelft.nl  
+Thomas Overklift, T.A.R.OverkliftVaupelKlein@student.tudelft.nl
 
 ## License
 

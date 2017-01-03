@@ -1,0 +1,16 @@
+PODS:
+  - Aldo (0.1.0)
+
+DEPENDENCIES:
+  - Aldo (from `../`)
+
+EXTERNAL SOURCES:
+  Aldo:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Aldo: 5b4ababcc97bb989d2267a96d7a9489c47d68c92
+
+PODFILE CHECKSUM: 6bcfb77702bcd6e3642fb0b54a01b060e711dc23
+
+COCOAPODS: 1.1.1

@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'Aldo'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of Aldo.'
+  s.summary          = 'Aldo APIs Client Library for iOS.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -17,21 +17,22 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
-  s.homepage         = 'https://github.com/<GITHUB_USERNAME>/Aldo'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'https://github.com/makchich/aldo-api-client-library-ios'
+  # s.screenshots      = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'makchich' => 'm.akchich@student.tudelft.nl' }
-  s.source           = { :git => 'https://github.com/<GITHUB_USERNAME>/Aldo.git', :tag => s.version.to_s }
+  s.authors          = { 'Mohamed Akchich' => 'M.Akchich@student.tudelft.nl',
+                         'Stephan Dumasy' => 'S.N.Dumasy@student.tudelft.nl',
+                         'Benjamin Los' => 'B.E.Los@student.tudelft.nl',
+                         'Thomas Overklift' => 'T.A.R.OverkliftVaupelKlein@student.tudelft.nl' }
+  s.source           = { :git => 'https://github.com/makchich/aldo-api-client-library-ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'Aldo/Classes/**/*'
-  
+  s.source_files = 'Aldo/*.swift'
+
+  s.dependency 'Alamofire', '~> 4.0'
+
   # s.resource_bundles = {
   #   'Aldo' => ['Aldo/Assets/*.png']
   # }
