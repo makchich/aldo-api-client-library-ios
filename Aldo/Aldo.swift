@@ -16,12 +16,6 @@ public enum Command: String {
     case SESSION_LEAVE = "/session/leave"
 }
 
-protocol Callback {
-    
-    func onResponse(responseCode: Int, response: Any)
-    
-}
-
 public class Aldo {
     
     private static var HOST_ADDRESS: String = "127.0.0.1"
@@ -29,12 +23,12 @@ public class Aldo {
     
     private static var ID: String = UIDevice.current.identifierForVendor!.uuidString
     
-    static func setHostAddress(address: String, port: Int = 4567) {
+    public static func setHostAddress(address: String, port: Int = 4567) {
         HOST_ADDRESS = address
         PORT = port
     }
     
-    static func request(command: String, parameters: Parameters, callback: Callback) {
+    public static func request(command: String, parameters: Parameters, callback: Callback) {
         let headers: HTTPHeaders = [
             "Authorization": ID
         ]
@@ -46,11 +40,11 @@ public class Aldo {
         }
     }
     
-    static func request(command: Command, parameters: Parameters, callback: Callback) {
+    public static func request(command: Command, parameters: Parameters, callback: Callback) {
         request(command: command.rawValue, parameters: parameters, callback: callback)
     }
     
-    static func requestAuthToken(callback: Callback) {
+    public static func requestAuthToken(callback: Callback) {
         let command: Command = Command.REQUEST_AUTH_TOKEN
         request(command: command, parameters: [:], callback: callback)
     }
