@@ -1,6 +1,7 @@
 use_frameworks!
 
 target 'Aldo_Example' do
+  pod 'Alamofire', '~> 4.0'
   pod 'Aldo', :path => '../'
 
   target 'Aldo_Tests' do

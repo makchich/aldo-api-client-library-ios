@@ -1,22 +1,29 @@
 {
   "name": "Aldo",
   "version": "0.1.0",
-  "summary": "A short description of Aldo.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/Aldo",
+  "summary": "Aldo APIs Client Library for iOS.",
+  "homepage": "https://github.com/makchich/aldo-api-client-library-ios",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": {
-    "makchich": "m.akchich@student.tudelft.nl"
+    "Mohamed Akchich": "M.Akchich@student.tudelft.nl",
+    "Stephan Dumasy": "S.N.Dumasy@student.tudelft.nl",
+    "Benjamin Los": "B.E.Los@student.tudelft.nl",
+    "Thomas Overklift": "T.A.R.OverkliftVaupelKlein@student.tudelft.nl"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/Aldo.git",
+    "git": "https://github.com/makchich/aldo-api-client-library-ios.git",
     "tag": "0.1.0"
   },
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "Aldo/Classes/**/*"
+  "source_files": "Aldo/*.swift",
+  "dependencies": {
+    "Alamofire": [
+      "~> 4.0"
+    ]
+  }
 }
