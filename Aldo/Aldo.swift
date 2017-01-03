@@ -34,4 +34,16 @@ public class Aldo {
         PORT = port
     }
     
+    static func request(command: String, parameters: Parameters, callback: Callback) {
+        let headers: HTTPHeaders = [
+            "Authorization": ID
+        ]
+        
+        Alamofire.request("\(HOST_ADDRESS)\(command)", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseString { response in
+            let statusCode: Int = response.response!.statusCode
+            let result: Any = response.result.value!
+            callback.onResponse(responseCode: statusCode, response: result)
+        }
+    }
+    
 }
