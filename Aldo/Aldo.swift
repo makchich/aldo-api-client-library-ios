@@ -46,4 +46,8 @@ public class Aldo {
         }
     }
     
+    static func request(command: Command, parameters: Parameters, callback: Callback) {
+        request(command: command.rawValue, parameters: parameters, callback: callback)
+    }
+    
 }
