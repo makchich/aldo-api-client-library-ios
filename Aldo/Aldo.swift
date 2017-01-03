@@ -16,6 +16,12 @@ public enum Command: String {
     case SESSION_LEAVE = "/session/leave"
 }
 
+protocol Callback {
+    
+    func onResponse(responseCode: Int, response: Any)
+    
+}
+
 public class Aldo {
     
     private static var HOST_ADDRESS: String = "127.0.0.1"
