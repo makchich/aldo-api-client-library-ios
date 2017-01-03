@@ -18,6 +18,14 @@ public enum Command: String {
 
 public class Aldo {
     
+    private static var HOST_ADDRESS: String = "127.0.0.1"
+    private static var PORT: Int = 4567
     
+    private static var ID: String = UIDevice.current.identifierForVendor!.uuidString
+    
+    static func setHostAddress(address: String, port: Int = 4567) {
+        HOST_ADDRESS = address
+        PORT = port
+    }
     
 }
