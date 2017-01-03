@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'Aldo_Example' do
+  pod 'Aldo', :path => '../'
+
+  target 'Aldo_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
