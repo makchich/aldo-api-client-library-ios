@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import Alamofire
+
+public class Aldo {
+    
+    
+    
+}
