@@ -10,6 +10,6 @@ import Foundation
 
 public protocol Callback {
     
-    func onResponse(responseCode: Int, response: Any)
+    func onResponse(responseCode: Int, response: NSDictionary)
     
 }

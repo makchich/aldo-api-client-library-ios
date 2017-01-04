@@ -22,7 +22,7 @@ pod "Aldo"
 
 ## Authors
 
-Mohamed Akchich, m.akchich@student.tudelft.nl  
+Mohamed Akchich, M.Akchich@student.tudelft.nl  
 Stephan Dumasy, S.N.Dumasy@student.tudelft.nl  
 Benjamin Los, B.E.Los@student.tudelft.nl  
 Thomas Overklift, T.A.R.OverkliftVaupelKlein@student.tudelft.nl
