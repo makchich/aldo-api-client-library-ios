@@ -8,19 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		10EB23E9ECC4B33E16933BB1EA560B6A /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87882A1F5A92C8138D54545E51D51E6F /* Timeline.swift */; };
-		166DDC1CF60CB5683BB5542799BFE606 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 706C7AFFE37BA158C3553250F4B5FAED /* Alamofire.framework */; };
-		1A361A55EC640F78800CAE29836A2AB4 /* Aldo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD3BF79B88608E064D70513F453D572 /* Aldo.swift */; };
+		18DA7D5AEA926A5B268FBC831B35AAFE /* Callback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111FD00A0E1CA59B070185E654F3898E /* Callback.swift */; };
 		1B9EDEDC964E6B08F78920B4F4B9DB84 /* Alamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B44A27EFBB0DA84D738057B77F3413B1 /* Alamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3396AB35B7EC051254A8A7B088145E42 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9B2E024A80A62FE090406312870D33 /* Foundation.framework */; };
 		3626B94094672CB1C9DEA32B9F9502E1 /* TaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01C037B4034EDA3D7955BC5E4E9D9D6 /* TaskDelegate.swift */; };
-		3F364F071E1C2E93001BDA90 /* Callback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F364F061E1C2E93001BDA90 /* Callback.swift */; };
+		4494E4ED3ED0B9DA5AF381D71B7DB5E3 /* Aldo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 88AABCB166CF10E3588168CB90145156 /* Aldo-dummy.m */; };
 		5387216E723A3C68E851CA15573CDD71 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E230A0448B394DE26E688DAC8E6201E /* Request.swift */; };
 		61200D01A1855D7920CEF835C8BE00B0 /* DispatchQueue+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCBF1EED873F61C6D46CE37FA5C39D3 /* DispatchQueue+Alamofire.swift */; };
 		61E5511BE85E8F21DC9B518FA4442173 /* Pods-Aldo_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F31ADCEC7CD8E4C3B6858D875424BFA /* Pods-Aldo_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62F65AD8DC4F0F9610F4B8B4738EC094 /* ServerTrustPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B030D27CAC730C5EB0F22390645310 /* ServerTrustPolicy.swift */; };
 		69211B0A1A8053669EAA9820F99F8912 /* Pods-Aldo_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAE5B38D709CC90D18C7E5A0DF1EF86 /* Pods-Aldo_Tests-dummy.m */; };
+		7215F04F1A2498158EA9FDA642051535 /* Aldo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD73E05ADB5DCBBC66A289CFB1B7A1B /* Aldo.swift */; };
 		7B5FE28C7EA4122B0598738E54DBEBD8 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D73DD9EF275A3C56569E2B1CA8026 /* SessionDelegate.swift */; };
 		7D8CC01E8C9EFFF9F4D65406CDE0AB66 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D60BC9955B4F7FFA62D7440CB385C11 /* Result.swift */; };
-		7F648B85B7EB47D7E8743210161721E4 /* Aldo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8DFA652116DD034EF390D745C73DAE /* Aldo-dummy.m */; };
+		8AAC165F2D54797F289175F2AABC6055 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 706C7AFFE37BA158C3553250F4B5FAED /* Alamofire.framework */; };
+		8B522AEB2B85F7F5CC9617C2D1144D02 /* Aldo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E3FD8024220390F42DD33A4759E7079 /* Aldo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8E2178B0DFCD5A0DE9D8EAE5A986094D /* Pods-Aldo_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A7B923452642A1FC3FA2BD67CE30995A /* Pods-Aldo_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9751BB0570A058236CCC5075C6B5FC58 /* Pods-Aldo_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A49B147E250C94584B4A887B50C9AC /* Pods-Aldo_Example-dummy.m */; };
 		9ED2BB2981896E0A39EFA365503F58CE /* AFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF006B0AD5765D1BFA8253C2DCBB126 /* AFError.swift */; };
@@ -34,27 +36,25 @@
 		BE5C67A07E289FE1F9BE27335B159997 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639346628280A0D0FAD35196BF56108 /* ParameterEncoding.swift */; };
 		C1B7F7BA3BF8807494FB6E38976DF3E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9B2E024A80A62FE090406312870D33 /* Foundation.framework */; };
 		CB6D60925223897FFA2662667DF83E8A /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F47F5C9CDB035C5AFADEBA5BF44F1C /* Response.swift */; };
-		ED2C09E54C92E57ED3769D595E125ED3 /* Aldo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2621CBC4FBE95D047E166DEF8A8B23C8 /* Aldo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EFD264FC408EBF3BA2528E70B08DDD94 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A46F517F0AF7E85A16D723F6406896 /* Notifications.swift */; };
 		F6BECD98B97CBFEBE2C96F0E9E72A6C0 /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F9510473F6FFD7AA66524DB16C2263 /* ResponseSerialization.swift */; };
 		F8B3D3092ED0417E8CDF32033F6122F5 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFCB8C44DE758E906C0BCDA455937B85 /* Alamofire.swift */; };
-		FE6359E1B69F03F8455071A713424FFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9B2E024A80A62FE090406312870D33 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		81A2614AF672090FE10B308B7FF13AB9 /* PBXContainerItemProxy */ = {
+		8A1ED685CB8CA6451C31404E58933E79 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 199B0AECE866FC0E7294C477470BDC33;
+			remoteInfo = Aldo;
+		};
+		A75EFC8C41253E90606B848F2990156B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 88E9EC28B8B46C3631E6B242B50F4442;
 			remoteInfo = Alamofire;
-		};
-		8A1ED685CB8CA6451C31404E58933E79 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 10FADF712117D106A4EAEC89355DD6DA;
-			remoteInfo = Aldo;
 		};
 		B18E754D1402444953A5B64875875B7A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -69,78 +69,78 @@
 		043F6C48D7F3CE9FBD8E9670F6648C13 /* Pods-Aldo_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Aldo_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		04F47F5C9CDB035C5AFADEBA5BF44F1C /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Source/Response.swift; sourceTree = "<group>"; };
 		0FCBF1EED873F61C6D46CE37FA5C39D3 /* DispatchQueue+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Alamofire.swift"; path = "Source/DispatchQueue+Alamofire.swift"; sourceTree = "<group>"; };
+		111FD00A0E1CA59B070185E654F3898E /* Callback.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Callback.swift; sourceTree = "<group>"; };
 		13A0A663B36A229C69D5274A83E93F88 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		155538D91ACEEEDF82069ACF6C1A02E7 /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormData.swift; path = Source/MultipartFormData.swift; sourceTree = "<group>"; };
 		195D73DD9EF275A3C56569E2B1CA8026 /* SessionDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionDelegate.swift; path = Source/SessionDelegate.swift; sourceTree = "<group>"; };
 		1E230A0448B394DE26E688DAC8E6201E /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request.swift; sourceTree = "<group>"; };
 		22C1C119BCE81C53F76CAC2BE27C38E0 /* Alamofire-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Alamofire-dummy.m"; sourceTree = "<group>"; };
-		2621CBC4FBE95D047E166DEF8A8B23C8 /* Aldo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Aldo-umbrella.h"; sourceTree = "<group>"; };
-		27CAFC317575E0FEF21408BDEECDB6AE /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		27CAFC317575E0FEF21408BDEECDB6AE /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A6E7BE65B4B7C4CD1D8947912862CC6 /* Aldo.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Aldo.xcconfig; sourceTree = "<group>"; };
+		2E3FD8024220390F42DD33A4759E7079 /* Aldo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Aldo-umbrella.h"; sourceTree = "<group>"; };
 		32B030D27CAC730C5EB0F22390645310 /* ServerTrustPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerTrustPolicy.swift; path = Source/ServerTrustPolicy.swift; sourceTree = "<group>"; };
-		340385FB3D63B7351938CE60FC1510FB /* Aldo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Aldo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		340385FB3D63B7351938CE60FC1510FB /* Aldo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Aldo.framework; path = Aldo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3883C31BDFD0DD85995AADDE97494FA0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3AD3BF79B88608E064D70513F453D572 /* Aldo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Aldo.swift; sourceTree = "<group>"; };
 		3D60BC9955B4F7FFA62D7440CB385C11 /* Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Source/Result.swift; sourceTree = "<group>"; };
 		3F31ADCEC7CD8E4C3B6858D875424BFA /* Pods-Aldo_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Aldo_Example-umbrella.h"; sourceTree = "<group>"; };
-		3F364F061E1C2E93001BDA90 /* Callback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Callback.swift; sourceTree = "<group>"; };
 		3F9B2E024A80A62FE090406312870D33 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		4687FC85F55D7FF0017BF3F73CBF1A33 /* Pods-Aldo_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Aldo_Tests-resources.sh"; sourceTree = "<group>"; };
 		46CDAC6C1187C5467E576980E1062C8B /* SessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionManager.swift; path = Source/SessionManager.swift; sourceTree = "<group>"; };
 		474C8D80B0C78C6024774112FBA0ED40 /* Pods-Aldo_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Aldo_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		493541435ECE8A6EA6B9F289CA7F9514 /* Aldo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Aldo.modulemap; sourceTree = "<group>"; };
 		4AF006B0AD5765D1BFA8253C2DCBB126 /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
 		4BF171E780E2EA4D5C7241016EDABF92 /* Pods-Aldo_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Aldo_Example-frameworks.sh"; sourceTree = "<group>"; };
-		5EB8D89932259E4EDDAED690F7FE8E14 /* Aldo.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Aldo.xcconfig; sourceTree = "<group>"; };
+		59EEAEB24342B697ED88E4E6CCC4219E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5EE96F831E6E4D18D7DA0968FBCE46C9 /* Pods-Aldo_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Aldo_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		6639346628280A0D0FAD35196BF56108 /* ParameterEncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParameterEncoding.swift; path = Source/ParameterEncoding.swift; sourceTree = "<group>"; };
 		66A46F517F0AF7E85A16D723F6406896 /* Notifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Source/Notifications.swift; sourceTree = "<group>"; };
-		6BC285AE413C84E49677261BBFB2BE17 /* Pods_Aldo_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Aldo_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BC285AE413C84E49677261BBFB2BE17 /* Pods_Aldo_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Aldo_Example.framework; path = "Pods-Aldo_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		706C7AFFE37BA158C3553250F4B5FAED /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7B3ECB40D2831384CA48810CF39376B7 /* Pods_Aldo_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Aldo_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D141D1953E5C6E67E362CE73090E48A /* Alamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Alamofire.modulemap; sourceTree = "<group>"; };
-		7D1A57D83830964879050856AF4F2E83 /* Aldo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Aldo.modulemap; sourceTree = "<group>"; };
+		7B3ECB40D2831384CA48810CF39376B7 /* Pods_Aldo_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Aldo_Tests.framework; path = "Pods-Aldo_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D141D1953E5C6E67E362CE73090E48A /* Alamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Alamofire.modulemap; sourceTree = "<group>"; };
+		7FD73E05ADB5DCBBC66A289CFB1B7A1B /* Aldo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Aldo.swift; sourceTree = "<group>"; };
 		87882A1F5A92C8138D54545E51D51E6F /* Timeline.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Timeline.swift; path = Source/Timeline.swift; sourceTree = "<group>"; };
+		88AABCB166CF10E3588168CB90145156 /* Aldo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Aldo-dummy.m"; sourceTree = "<group>"; };
 		92049AC05A2B4F57195F09F3623F02A3 /* Pods-Aldo_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Aldo_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		92A49B147E250C94584B4A887B50C9AC /* Pods-Aldo_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Aldo_Example-dummy.m"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A01C037B4034EDA3D7955BC5E4E9D9D6 /* TaskDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskDelegate.swift; path = Source/TaskDelegate.swift; sourceTree = "<group>"; };
 		A7B923452642A1FC3FA2BD67CE30995A /* Pods-Aldo_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Aldo_Tests-umbrella.h"; sourceTree = "<group>"; };
 		B01B44AB7C58647181CF346F0FBAF4F5 /* Pods-Aldo_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Aldo_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		B029DBC43E49A740F12B5E4D2E6DD452 /* Validation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Validation.swift; path = Source/Validation.swift; sourceTree = "<group>"; };
 		B44A27EFBB0DA84D738057B77F3413B1 /* Alamofire-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-umbrella.h"; sourceTree = "<group>"; };
 		B6AE635F2DDD2F7D4966F0C01A0B0487 /* Pods-Aldo_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Aldo_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		B763986332229BEC9AD8B08E6086661D /* Pods-Aldo_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Aldo_Example.modulemap"; sourceTree = "<group>"; };
+		B763986332229BEC9AD8B08E6086661D /* Pods-Aldo_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Aldo_Example.modulemap"; sourceTree = "<group>"; };
 		B79AB76E36FAE6C0BA6033AADC183554 /* Pods-Aldo_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Aldo_Example.release.xcconfig"; sourceTree = "<group>"; };
-		B9F677884CE82658C41C4E2A6E02D5EF /* Aldo-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Aldo-prefix.pch"; sourceTree = "<group>"; };
 		BCCA9CA7D9C1A2047BB93336C5708DFD /* Alamofire-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-prefix.pch"; sourceTree = "<group>"; };
+		BD27AC4EBAB6E2C571C6BD3419135613 /* Aldo-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Aldo-prefix.pch"; sourceTree = "<group>"; };
 		BFAE5B38D709CC90D18C7E5A0DF1EF86 /* Pods-Aldo_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Aldo_Tests-dummy.m"; sourceTree = "<group>"; };
 		C7C0318854D5EA040892147CD8168BFB /* Pods-Aldo_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Aldo_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C9EADB9EBABB15848573E0762A086DBE /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3E22BDCFE2DA0EA36D25E10DB8D9570 /* Pods-Aldo_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Aldo_Example-resources.sh"; sourceTree = "<group>"; };
-		DED3A9F3B6C462DBACE72506F23DF1A8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DFCB8C44DE758E906C0BCDA455937B85 /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
 		E2F9510473F6FFD7AA66524DB16C2263 /* ResponseSerialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResponseSerialization.swift; path = Source/ResponseSerialization.swift; sourceTree = "<group>"; };
 		E5A8AA5F9EDED0A0BDDE7E830BF4AEE0 /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkReachabilityManager.swift; path = Source/NetworkReachabilityManager.swift; sourceTree = "<group>"; };
 		E6F34CCF86067ED508C12C676E298C69 /* Alamofire.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.xcconfig; sourceTree = "<group>"; };
 		ECE5EC4457682F1BC3E97E7E3D02DFDE /* Pods-Aldo_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Aldo_Tests-frameworks.sh"; sourceTree = "<group>"; };
-		F427BEBBF3CC5A8B1BE5AC6232DC05E0 /* Pods-Aldo_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Aldo_Tests.modulemap"; sourceTree = "<group>"; };
-		FA8DFA652116DD034EF390D745C73DAE /* Aldo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Aldo-dummy.m"; sourceTree = "<group>"; };
+		F427BEBBF3CC5A8B1BE5AC6232DC05E0 /* Pods-Aldo_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Aldo_Tests.modulemap"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		55763A1CB440C6BC8A70A0A5A3A4D747 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AAC165F2D54797F289175F2AABC6055 /* Alamofire.framework in Frameworks */,
+				3396AB35B7EC051254A8A7B088145E42 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		67EF4E317C817B36930B09DFFE38DB3B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				C1B7F7BA3BF8807494FB6E38976DF3E3 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9695494745508D0918479A686ECF03E2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				166DDC1CF60CB5683BB5542799BFE606 /* Alamofire.framework in Frameworks */,
-				FE6359E1B69F03F8455071A713424FFF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +163,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		164207427510B6E92348ED5F818F4ADC /* Aldo */ = {
+			isa = PBXGroup;
+			children = (
+				7FD73E05ADB5DCBBC66A289CFB1B7A1B /* Aldo.swift */,
+				111FD00A0E1CA59B070185E654F3898E /* Callback.swift */,
+			);
+			name = Aldo;
+			path = Aldo;
+			sourceTree = "<group>";
+		};
 		1E6C5EFF5E8E9897B1BC573799CD2254 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +206,7 @@
 				B029DBC43E49A740F12B5E4D2E6DD452 /* Validation.swift */,
 				55F14F994FE7AB51F028BFE66CEF3106 /* Support Files */,
 			);
+			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -250,45 +261,22 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		A4E9125503C5F51AE7E25A61A3A46229 /* Support Files */ = {
+		9F03B3F875903CA468B8E8A51C32FAB4 /* Aldo */ = {
 			isa = PBXGroup;
 			children = (
-				7D1A57D83830964879050856AF4F2E83 /* Aldo.modulemap */,
-				5EB8D89932259E4EDDAED690F7FE8E14 /* Aldo.xcconfig */,
-				FA8DFA652116DD034EF390D745C73DAE /* Aldo-dummy.m */,
-				B9F677884CE82658C41C4E2A6E02D5EF /* Aldo-prefix.pch */,
-				2621CBC4FBE95D047E166DEF8A8B23C8 /* Aldo-umbrella.h */,
-				DED3A9F3B6C462DBACE72506F23DF1A8 /* Info.plist */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/Aldo";
-			sourceTree = "<group>";
-		};
-		B907BE2B9B7963C490915DA7D00DCBF5 /* Development Pods */ = {
-			isa = PBXGroup;
-			children = (
-				BBDECE3C811A4500E80586FE5D64F482 /* Aldo */,
-			);
-			name = "Development Pods";
-			sourceTree = "<group>";
-		};
-		BBDECE3C811A4500E80586FE5D64F482 /* Aldo */ = {
-			isa = PBXGroup;
-			children = (
-				C77648E68F97F34E4E1E5842843AECF7 /* Aldo */,
-				A4E9125503C5F51AE7E25A61A3A46229 /* Support Files */,
+				164207427510B6E92348ED5F818F4ADC /* Aldo */,
+				EEAA7921D0961A0C1CD9AE095F880C52 /* Support Files */,
 			);
 			name = Aldo;
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		C77648E68F97F34E4E1E5842843AECF7 /* Aldo */ = {
+		B907BE2B9B7963C490915DA7D00DCBF5 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3AD3BF79B88608E064D70513F453D572 /* Aldo.swift */,
-				3F364F061E1C2E93001BDA90 /* Callback.swift */,
+				9F03B3F875903CA468B8E8A51C32FAB4 /* Aldo */,
 			);
-			path = Aldo;
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 		CF3C00EA653052FC407F651A7658231B /* Pods-Aldo_Example */ = {
@@ -327,6 +315,20 @@
 			path = "Target Support Files/Pods-Aldo_Tests";
 			sourceTree = "<group>";
 		};
+		EEAA7921D0961A0C1CD9AE095F880C52 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				493541435ECE8A6EA6B9F289CA7F9514 /* Aldo.modulemap */,
+				2A6E7BE65B4B7C4CD1D8947912862CC6 /* Aldo.xcconfig */,
+				88AABCB166CF10E3588168CB90145156 /* Aldo-dummy.m */,
+				BD27AC4EBAB6E2C571C6BD3419135613 /* Aldo-prefix.pch */,
+				2E3FD8024220390F42DD33A4759E7079 /* Aldo-umbrella.h */,
+				59EEAEB24342B697ED88E4E6CCC4219E /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/Aldo";
+			sourceTree = "<group>";
+		};
 		EFA02A6F93DE85D9CED71A3D7A9AAD5F /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,11 +341,11 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		765B8456D9FEA3C47EFB3965004010B2 /* Headers */ = {
+		A343557CEDEA25E8289BD1B6FA7409CC /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED2C09E54C92E57ED3769D595E125ED3 /* Aldo-umbrella.h in Headers */,
+				8B522AEB2B85F7F5CC9617C2D1144D02 /* Aldo-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,18 +376,18 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		10FADF712117D106A4EAEC89355DD6DA /* Aldo */ = {
+		199B0AECE866FC0E7294C477470BDC33 /* Aldo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6E493BD13710377CDE8030B088266D /* Build configuration list for PBXNativeTarget "Aldo" */;
+			buildConfigurationList = 9C7845D8452520CD876DAC2CD2C11507 /* Build configuration list for PBXNativeTarget "Aldo" */;
 			buildPhases = (
-				EA1165917F65746B149D3F2FA2D820C0 /* Sources */,
-				9695494745508D0918479A686ECF03E2 /* Frameworks */,
-				765B8456D9FEA3C47EFB3965004010B2 /* Headers */,
+				1F5734F8EDCCB1DD250975545CBD87D6 /* Sources */,
+				55763A1CB440C6BC8A70A0A5A3A4D747 /* Frameworks */,
+				A343557CEDEA25E8289BD1B6FA7409CC /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E0628B608B4BC7583F687827DF89AE6D /* PBXTargetDependency */,
+				49067A26D1F85591E2B949702218231F /* PBXTargetDependency */,
 			);
 			name = Aldo;
 			productName = Aldo;
@@ -467,7 +469,7 @@
 			projectRoot = "";
 			targets = (
 				88E9EC28B8B46C3631E6B242B50F4442 /* Alamofire */,
-				10FADF712117D106A4EAEC89355DD6DA /* Aldo */,
+				199B0AECE866FC0E7294C477470BDC33 /* Aldo */,
 				C252FE3DB2D8ADB37CD71D2A6BBEA34C /* Pods-Aldo_Example */,
 				C414C4CDCD880180F6CB48CBA951EAD6 /* Pods-Aldo_Tests */,
 			);
@@ -475,6 +477,16 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1F5734F8EDCCB1DD250975545CBD87D6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4494E4ED3ED0B9DA5AF381D71B7DB5E3 /* Aldo-dummy.m in Sources */,
+				7215F04F1A2498158EA9FDA642051535 /* Aldo.swift in Sources */,
+				18DA7D5AEA926A5B268FBC831B35AAFE /* Callback.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32B9974868188C4803318E36329C87FE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -516,36 +528,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EA1165917F65746B149D3F2FA2D820C0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7F648B85B7EB47D7E8743210161721E4 /* Aldo-dummy.m in Sources */,
-				3F364F071E1C2E93001BDA90 /* Callback.swift in Sources */,
-				1A361A55EC640F78800CAE29836A2AB4 /* Aldo.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		47156CD8F664975FC578359C55978324 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Aldo;
-			target = 10FADF712117D106A4EAEC89355DD6DA /* Aldo */;
+			target = 199B0AECE866FC0E7294C477470BDC33 /* Aldo */;
 			targetProxy = 8A1ED685CB8CA6451C31404E58933E79 /* PBXContainerItemProxy */;
+		};
+		49067A26D1F85591E2B949702218231F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Alamofire;
+			target = 88E9EC28B8B46C3631E6B242B50F4442 /* Alamofire */;
+			targetProxy = A75EFC8C41253E90606B848F2990156B /* PBXContainerItemProxy */;
 		};
 		7F5AA30B803AA660ACC5E935C64A3792 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Alamofire;
 			target = 88E9EC28B8B46C3631E6B242B50F4442 /* Alamofire */;
 			targetProxy = B18E754D1402444953A5B64875875B7A /* PBXContainerItemProxy */;
-		};
-		E0628B608B4BC7583F687827DF89AE6D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Alamofire;
-			target = 88E9EC28B8B46C3631E6B242B50F4442 /* Alamofire */;
-			targetProxy = 81A2614AF672090FE10B308B7FF13AB9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -626,6 +628,39 @@
 			};
 			name = Release;
 		};
+		3A26E11297A304C9A0B1D3475F38224E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A6E7BE65B4B7C4CD1D8947912862CC6 /* Aldo.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Aldo/Aldo-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Aldo/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Aldo/Aldo.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = Aldo;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		44CDBB6D11DE06DB64D6268622BDC47E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -701,6 +736,38 @@
 			};
 			name = Release;
 		};
+		78E58590554F4ECA14BFC964A7692C35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A6E7BE65B4B7C4CD1D8947912862CC6 /* Aldo.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Aldo/Aldo-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Aldo/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Aldo/Aldo.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Aldo;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		981A6880323883C292BF1C8EF84D769B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C7C0318854D5EA040892147CD8168BFB /* Pods-Aldo_Example.debug.xcconfig */;
@@ -736,38 +803,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		9C099F06E9B0DF4FBA4F7E4F2F44CF65 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5EB8D89932259E4EDDAED690F7FE8E14 /* Aldo.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/Aldo/Aldo-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Aldo/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Aldo/Aldo.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = Aldo;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		E1D81B568331C6E7F0BA727A0199B411 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -872,51 +907,9 @@
 			};
 			name = Debug;
 		};
-		FA7C8FB13EEF4A796AF623485C7B8879 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5EB8D89932259E4EDDAED690F7FE8E14 /* Aldo.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/Aldo/Aldo-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Aldo/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Aldo/Aldo.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = Aldo;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6E493BD13710377CDE8030B088266D /* Build configuration list for PBXNativeTarget "Aldo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FA7C8FB13EEF4A796AF623485C7B8879 /* Debug */,
-				9C099F06E9B0DF4FBA4F7E4F2F44CF65 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -940,6 +933,15 @@
 			buildConfigurations = (
 				981A6880323883C292BF1C8EF84D769B /* Debug */,
 				E1D81B568331C6E7F0BA727A0199B411 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C7845D8452520CD876DAC2CD2C11507 /* Build configuration list for PBXNativeTarget "Aldo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A26E11297A304C9A0B1D3475F38224E /* Debug */,
+				78E58590554F4ECA14BFC964A7692C35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
