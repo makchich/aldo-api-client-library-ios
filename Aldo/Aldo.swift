@@ -30,7 +30,7 @@ public class Aldo {
     
     public static func request(command: String, parameters: Parameters, callback: Callback) {
         let object = storage.object(forKey: authTokenStorageKey)
-        var token: String = (object != nil) ? ":\(object as! String)" : ""
+        let token: String = (object != nil) ? ":\(object as! String)" : ""
         
         let headers: HTTPHeaders = [
             "Authorization": "\(ID)\(token)"
