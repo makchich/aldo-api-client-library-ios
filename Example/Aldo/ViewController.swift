@@ -16,7 +16,14 @@ class ViewController: UIViewController, Callback {
         // Do any additional setup after loading the view, typically from a nib.
         
         Aldo.setHostAddress(address: "https://expeditionmundus.herokuapp.com")
-        Aldo.requestAuthToken(callback: self)
+        
+        if !Aldo.hasAuthToken() {
+            Aldo.requestAuthToken(callback: self)
+        }
+        
+        if !Aldo.hasSession() {
+            Aldo.createSession(username: "aldo_demo", callback: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,6 +33,9 @@ class ViewController: UIViewController, Callback {
     
     func onResponse(responseCode: Int, response: NSDictionary) {
         // Do Nothing
+        
+        print(responseCode)
+        print(response)
     }
 
 }

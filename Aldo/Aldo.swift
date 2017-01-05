@@ -19,8 +19,15 @@ public class Aldo {
     
     private static var ID: String = UIDevice.current.identifierForVendor!.uuidString
     
+    private enum Keys: String {
+        case AUTH_TOKEN = "AUTH_TOKEN"
+        case SESSION = "SESSION"
+    }
+    
     private enum Command: String {
         case REQUEST_AUTH_TOKEN = "/token"
+        case CREATE_SESSION = "/session/username/"
+        case JOIN_SESSION = "/session/join/%s/username/%s"
     }
     
     public static func setHostAddress(address: String, port: Int = 4567) {
@@ -29,11 +36,17 @@ public class Aldo {
     }
     
     public static func request(command: String, parameters: Parameters, callback: Callback) {
-        let object = storage.object(forKey: authTokenStorageKey)
-        let token: String = (object != nil) ? ":\(object as! String)" : ""
+        let objToken = storage.object(forKey: Keys.AUTH_TOKEN.rawValue)
+        let token: String = (objToken != nil) ? ":\(objToken as! String)" : ""
+        
+        
+        var player: String = ""
+        if let session = Aldo.getSession() {
+            player = ":\(session.getPlayerID())"
+        }
         
         let headers: HTTPHeaders = [
-            "Authorization": "\(ID)\(token)"
+            "Authorization": "\(ID)\(token)\(player)"
         ]
         
         Alamofire.request("\(HOST_ADDRESS)\(command)", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { response in
@@ -55,7 +68,34 @@ public class Aldo {
     }
     
     public static func hasAuthToken() -> Bool {
-        return storage.object(forKey: authTokenStorageKey) != nil
+        return storage.object(forKey: Keys.AUTH_TOKEN.rawValue) != nil
+    }
+    
+    public static func createSession(username: String, callback: Callback) {
+        let command: String = "\(Command.CREATE_SESSION.rawValue)\(username)"
+        let createSessionCallback: Callback = CreateSessionCallback(username: username, callback: callback)
+        
+        request(command: command, parameters: [:], callback: createSessionCallback)
+    }
+    
+    public static func joinSession(username: String, token: String, callback: Callback) {
+        let command: String = String(format: Command.JOIN_SESSION.rawValue, token, username)
+        let joinSessionCallback: Callback = JoinSessionCallback(username: username, callback: callback)
+        
+        request(command: command, parameters: [:], callback: joinSessionCallback)
+    }
+    
+    public static func hasSession() -> Bool {
+        return storage.object(forKey: Keys.SESSION.rawValue) != nil
+    }
+    
+    public static func getSession() -> AldoSession? {
+        if let objSession = storage.object(forKey: Keys.SESSION.rawValue) {
+            let sessionData = objSession as! Data
+            let session: AldoSession = NSKeyedUnarchiver.unarchiveObject(with: sessionData) as! AldoSession
+            return session
+        }
+        return nil
     }
     
     private class AuthTokenCallback: Callback {
@@ -68,9 +108,64 @@ public class Aldo {
         
         public func onResponse(responseCode: Int, response: NSDictionary) {
             if(responseCode == 200) {
-                storage.set(response["token"], forKey: authTokenStorageKey)
+                storage.set(response["token"], forKey: Keys.AUTH_TOKEN.rawValue)
             }
             callback.onResponse(responseCode: responseCode, response: response)
         }
+    }
+    
+    private class CreateSessionCallback: Callback {
+        
+        private var username: String
+        private var callback: Callback
+        
+        public init(username: String, callback: Callback) {
+            self.username = username
+            self.callback = callback
+        }
+        
+        public func onResponse(responseCode: Int, response: NSDictionary) {
+            if(responseCode == 200) {
+                let data: [String: String] = [
+                    "sessionID": response["sessionID"] as! String,
+                    "playerID": response["playerID"] as! String,
+                    "modToken": response["modToken"] as! String,
+                    "userToken": response["userToken"] as! String,
+                    "username": response["username"] as! String
+                ]
+                let session: AldoSession = AldoSession(data: data)
+                let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
+                storage.set(sessionData, forKey: Keys.SESSION.rawValue)
+            }
+            callback.onResponse(responseCode: responseCode, response: response)
+        }
+    }
+    
+    private class JoinSessionCallback: Callback {
+        
+        private var username: String
+        private var callback: Callback
+        
+        public init(username: String, callback: Callback) {
+            self.username = username
+            self.callback = callback
+        }
+        
+        public func onResponse(responseCode: Int, response: NSDictionary) {
+            if(responseCode == 200) {
+                let data: [String: String] = [
+                    "sessionID": response["sessionID"] as! String,
+                    "playerID": response["playerID"] as! String,
+                    "modToken": "",
+                    "userToken": "",
+                    "username": response["username"] as! String
+                ]
+                let session: AldoSession = AldoSession(data: data)
+                let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
+                storage.set(sessionData, forKey: Keys.SESSION.rawValue)
+            }
+            callback.onResponse(responseCode: responseCode, response: response)
+        }
+        
     }
 }
