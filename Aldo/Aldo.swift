@@ -21,11 +21,7 @@ public class Aldo {
     
     private enum Keys: String {
         case AUTH_TOKEN = "AUTH_TOKEN"
-        case SESSION_ID = "SESSION_ID"
-        case SESSION_PLAYER_ID = "SESSION_PLAYER_ID"
-        case SESSION_USERNAME = "SESSION_USERNAME"
-        case SESSION_MOD_TOKEN = "SESSION_MOD_TOKEN"
-        case SESSION_PLAY_TOKEN = "SESSION_PLAY_TOKEN"
+        case SESSION = "SESSION"
     }
     
     private enum Command: String {
@@ -43,8 +39,11 @@ public class Aldo {
         let token: String = (objToken != nil) ? ":\(objToken as! String)" : ""
         
         
-        let objPlayer = storage.object(forKey: Keys.SESSION_PLAYER_ID.rawValue)
-        let player: String = (objPlayer != nil) ? ":\(objPlayer as! String)" : ""
+        var player: String = ""
+        if let objSession = storage.object(forKey: Keys.SESSION.rawValue) {
+            let session: AldoSession = (objSession as! AldoSession)
+            player = ":\(session.getPlayerID())"
+        }
         
         let headers: HTTPHeaders = [
             "Authorization": "\(ID)\(token)\(player)"
@@ -75,16 +74,21 @@ public class Aldo {
     public static func createSession(username: String, callback: Callback) {
         let command: String = "\(Command.CREATE_SESSION.rawValue)\(username)"
         let createSessionCallback: Callback = CreateSessionCallback(username: username, callback: callback)
+        
+        request(command: command, parameters: [:], callback: createSessionCallback)
     }
     
     public static func hasSession() -> Bool {
-        return storage.object(forKey: Keys.SESSION_ID.rawValue) != nil
+        return storage.object(forKey: Keys.SESSION.rawValue) != nil
     }
     
-    public static func isSessionAdmin() -> Bool {
-        let hasModtoken: Bool = storage.object(forKey: Keys.SESSION_MOD_TOKEN.rawValue) != nil
-        let hasPlayToken: Bool = storage.object(forKey: Keys.SESSION_PLAY_TOKEN.rawValue) != nil
-        return hasSession() && hasModtoken && hasPlayToken
+    public static func getSession() -> AldoSession? {
+        if let objSession = storage.object(forKey: Keys.SESSION.rawValue) {
+            let sessionData = objSession as! Data
+            let session: AldoSession = NSKeyedUnarchiver.unarchiveObject(with: sessionData) as! AldoSession
+            return session
+        }
+        return nil
     }
     
     private class AuthTokenCallback: Callback {
@@ -115,11 +119,15 @@ public class Aldo {
         
         public func onResponse(responseCode: Int, response: NSDictionary) {
             if(responseCode == 200) {
-                storage.set(username, forKey: Keys.SESSION_USERNAME.rawValue)
-                storage.set(response["sessionID"], forKey: Keys.SESSION_ID.rawValue)
-                storage.set(response["playerID"], forKey: Keys.SESSION_PLAYER_ID.rawValue)
-                storage.set(response["modToken"], forKey: Keys.SESSION_MOD_TOKEN.rawValue)
-                storage.set(response["userToken"], forKey: Keys.SESSION_PLAY_TOKEN.rawValue)
+                let session: AldoSession = AldoSession(username: username, session: response)
+                let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
+                storage.set(sessionData, forKey: Keys.SESSION.rawValue)
+                
+//                storage.set(username, forKey: Keys.SESSION_USERNAME.rawValue)
+//                storage.set(response["sessionID"], forKey: Keys.SESSION_ID.rawValue)
+//                storage.set(response["playerID"], forKey: Keys.SESSION_PLAYER_ID.rawValue)
+//                storage.set(response["modToken"], forKey: Keys.SESSION_MOD_TOKEN.rawValue)
+//                storage.set(response["userToken"], forKey: Keys.SESSION_PLAY_TOKEN.rawValue)
             }
             callback.onResponse(responseCode: responseCode, response: response)
         }
