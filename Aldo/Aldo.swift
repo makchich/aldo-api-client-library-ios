@@ -40,8 +40,7 @@ public class Aldo {
         
         
         var player: String = ""
-        if let objSession = storage.object(forKey: Keys.SESSION.rawValue) {
-            let session: AldoSession = (objSession as! AldoSession)
+        if let session = Aldo.getSession() {
             player = ":\(session.getPlayerID())"
         }
         
