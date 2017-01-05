@@ -36,10 +36,6 @@ class ViewController: UIViewController, Callback {
         
         print(responseCode)
         print(response)
-        
-        if Aldo.hasSession() {
-            print(Aldo.getSession()!.getSessionID())
-        }
     }
 
 }

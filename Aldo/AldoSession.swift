@@ -16,12 +16,12 @@ public class AldoSession: NSObject, NSCoding {
     private var userToken: String
     private var username: String
     
-    public init(username: String, session: NSDictionary) {
-        self.sessionId = session.object(forKey: "sessionID") as! String
-        self.playerId = session.object(forKey: "playerID") as! String
-        self.modToken = session.object(forKey: "modToken") as! String
-        self.userToken = session.object(forKey: "userToken") as! String
-        self.username = username
+    public init(data: [String: String]) {
+        self.sessionId = data["sessionID"]!
+        self.playerId = data["playerID"]!
+        self.modToken = data["modToken"]!
+        self.userToken = data["userToken"]!
+        self.username = data["username"]!
     }
     
     public init(sessionId: String, playerId: String, modToken: String, userToken: String, username: String) {
@@ -50,7 +50,7 @@ public class AldoSession: NSObject, NSCoding {
     }
     
     public func isAdmin() -> Bool {
-        return getModToken() != nil && getUserToken() != nil
+        return getModToken() != "" && getUserToken() != ""
     }
     
     public func getSessionID() -> String {
