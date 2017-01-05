@@ -27,7 +27,7 @@ public class Aldo {
     private enum Command: String {
         case REQUEST_AUTH_TOKEN = "/token"
         case SESSION_CREATE = "/session/username/"
-        case SESSION_JOIN = "/session/join/%s/username/%s"
+        case SESSION_JOIN = "/session/join/%@/username/%@"
         case SESSION_DELETE = "/session/delete"
         case SESSION_PLAYERS = "/session/players"
     }
@@ -51,7 +51,7 @@ public class Aldo {
             "Authorization": "\(ID)\(token)\(player)"
         ]
         
-        Alamofire.request("\(HOST_ADDRESS)\(command)", method: method, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { response in
+        Alamofire.request("\(HOST_ADDRESS)\(command)", method: method, parameters: parameters, headers: headers).responseJSON { response in
             
             var result: NSDictionary = [:]
             if let JSON = response.result.value {
