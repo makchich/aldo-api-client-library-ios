@@ -131,7 +131,7 @@ public class Aldo {
                     "playerID": response["playerID"] as! String,
                     "modToken": response["modToken"] as! String,
                     "userToken": response["userToken"] as! String,
-                    "username": response["username"] as! String
+                    "username": username
                 ]
                 let session: AldoSession = AldoSession(data: data)
                 let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
@@ -158,7 +158,7 @@ public class Aldo {
                     "playerID": response["playerID"] as! String,
                     "modToken": "",
                     "userToken": "",
-                    "username": response["username"] as! String
+                    "username": username as! String
                 ]
                 let session: AldoSession = AldoSession(data: data)
                 let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)

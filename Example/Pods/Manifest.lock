@@ -1,11 +1,13 @@
 PODS:
   - Alamofire (4.2.0)
-  - Aldo (0.2.0):
+  - Aldo (0.3.1):
     - Alamofire (~> 4.0)
+  - SwiftLint (0.15.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - Aldo (from `../`)
+  - SwiftLint
 
 EXTERNAL SOURCES:
   Aldo:
@@ -13,8 +15,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  Aldo: af71046400149216ae540becf02d43adbfa4bf27
+  Aldo: a80f987880382ba0d10ebc65c14919ebe9a7651c
+  SwiftLint: d73999f81682ab8114d6408c89f83177b2c197d7
 
-PODFILE CHECKSUM: c014436bec40a8109fb923526327e63e74d8da67
+PODFILE CHECKSUM: c71308917bf53cb905da306b06dc3b732e696a45
 
 COCOAPODS: 1.1.1
