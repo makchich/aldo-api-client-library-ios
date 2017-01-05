@@ -26,9 +26,10 @@ public class Aldo {
     
     private enum Command: String {
         case REQUEST_AUTH_TOKEN = "/token"
-        case CREATE_SESSION = "/session/username/"
-        case JOIN_SESSION = "/session/join/%s/username/%s"
-        case DELETE_SESSION = "/session/delete"
+        case SESSION_CREATE = "/session/username/"
+        case SESSION_JOIN = "/session/join/%s/username/%s"
+        case SESSION_DELETE = "/session/delete"
+        case SESSION_PLAYERS = "/session/players"
     }
     
     public static func setHostAddress(address: String, port: Int = 4567) {
@@ -73,24 +74,29 @@ public class Aldo {
     }
     
     public static func createSession(username: String, callback: Callback) {
-        let command: String = "\(Command.CREATE_SESSION.rawValue)\(username)"
+        let command: String = "\(Command.SESSION_CREATE.rawValue)\(username)"
         let createSessionCallback: Callback = CreateSessionCallback(username: username, callback: callback)
         
         request(command: command, method: .post, parameters: [:], callback: createSessionCallback)
     }
     
     public static func joinSession(username: String, token: String, callback: Callback) {
-        let command: String = String(format: Command.JOIN_SESSION.rawValue, token, username)
+        let command: String = String(format: Command.SESSION_JOIN.rawValue, token, username)
         let joinSessionCallback: Callback = JoinSessionCallback(username: username, callback: callback)
         
         request(command: command, method: .post, parameters: [:], callback: joinSessionCallback)
     }
     
     public static func deleteSession(callback: Callback) {
-        let command: String = Command.DELETE_SESSION.rawValue
+        let command: String = Command.SESSION_DELETE.rawValue
         let deleteSessionCallback: Callback = DeleteSessionCallback(callback: callback)
         
         request(command: command, method: .delete, parameters: [:], callback: deleteSessionCallback)
+    }
+    
+    public static func getSessionPlayers(callback: Callback) {
+        let command: String = Command.SESSION_PLAYERS.rawValue
+        request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
     public static func hasSession() -> Bool {
@@ -191,6 +197,5 @@ public class Aldo {
             
             callback.onResponse(responseCode: responseCode, response: response)
         }
-        
     }
 }
