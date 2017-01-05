@@ -26,8 +26,10 @@ public class Aldo {
     
     private enum Command: String {
         case REQUEST_AUTH_TOKEN = "/token"
-        case CREATE_SESSION = "/session/username/"
-        case JOIN_SESSION = "/session/join/%s/username/%s"
+        case SESSION_CREATE = "/session/username/"
+        case SESSION_JOIN = "/session/join/%@/username/%@"
+        case SESSION_DELETE = "/session/delete"
+        case SESSION_PLAYERS = "/session/players"
     }
     
     public static func setHostAddress(address: String, port: Int = 4567) {
@@ -35,7 +37,7 @@ public class Aldo {
         PORT = port
     }
     
-    public static func request(command: String, parameters: Parameters, callback: Callback) {
+    public static func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback) {
         let objToken = storage.object(forKey: Keys.AUTH_TOKEN.rawValue)
         let token: String = (objToken != nil) ? ":\(objToken as! String)" : ""
         
@@ -49,7 +51,7 @@ public class Aldo {
             "Authorization": "\(ID)\(token)\(player)"
         ]
         
-        Alamofire.request("\(HOST_ADDRESS)\(command)", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { response in
+        Alamofire.request("\(HOST_ADDRESS)\(command)", method: method, parameters: parameters, headers: headers).responseJSON { response in
             
             var result: NSDictionary = [:]
             if let JSON = response.result.value {
@@ -64,7 +66,7 @@ public class Aldo {
         let command: Command = Command.REQUEST_AUTH_TOKEN
         let authTokenCallback: Callback = AuthTokenCallback(callback: callback)
         
-        request(command: command.rawValue, parameters: [:], callback: authTokenCallback)
+        request(command: command.rawValue, method: .post, parameters: [:], callback: authTokenCallback)
     }
     
     public static func hasAuthToken() -> Bool {
@@ -72,17 +74,29 @@ public class Aldo {
     }
     
     public static func createSession(username: String, callback: Callback) {
-        let command: String = "\(Command.CREATE_SESSION.rawValue)\(username)"
+        let command: String = "\(Command.SESSION_CREATE.rawValue)\(username)"
         let createSessionCallback: Callback = CreateSessionCallback(username: username, callback: callback)
         
-        request(command: command, parameters: [:], callback: createSessionCallback)
+        request(command: command, method: .post, parameters: [:], callback: createSessionCallback)
     }
     
     public static func joinSession(username: String, token: String, callback: Callback) {
-        let command: String = String(format: Command.JOIN_SESSION.rawValue, token, username)
+        let command: String = String(format: Command.SESSION_JOIN.rawValue, token, username)
         let joinSessionCallback: Callback = JoinSessionCallback(username: username, callback: callback)
         
-        request(command: command, parameters: [:], callback: joinSessionCallback)
+        request(command: command, method: .post, parameters: [:], callback: joinSessionCallback)
+    }
+    
+    public static func deleteSession(callback: Callback) {
+        let command: String = Command.SESSION_DELETE.rawValue
+        let deleteSessionCallback: Callback = DeleteSessionCallback(callback: callback)
+        
+        request(command: command, method: .delete, parameters: [:], callback: deleteSessionCallback)
+    }
+    
+    public static func getSessionPlayers(callback: Callback) {
+        let command: String = Command.SESSION_PLAYERS.rawValue
+        request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
     public static func hasSession() -> Bool {
@@ -166,6 +180,22 @@ public class Aldo {
             }
             callback.onResponse(responseCode: responseCode, response: response)
         }
+    }
+    
+    private class DeleteSessionCallback: Callback {
         
+        private var callback: Callback
+        
+        public init(callback: Callback) {
+            self.callback = callback
+        }
+        
+        public func onResponse(responseCode: Int, response: NSDictionary) {
+            if(responseCode == 200) {
+                storage.removeObject(forKey: Keys.SESSION.rawValue)
+            }
+            
+            callback.onResponse(responseCode: responseCode, response: response)
+        }
     }
 }
