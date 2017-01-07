@@ -39,24 +39,24 @@ open class Aldo {
     
     private static var ID: String = UIDevice.current.identifierForVendor!.uuidString
     
-    public static func setHostAddress(address: String, port: Int = 4567) {
+    open class func setHostAddress(address: String, port: Int = 4567) {
         HOST_ADDRESS = address
         PORT = port
     }
     
-    public static func hasAuthToken() -> Bool {
+    open class func hasAuthToken() -> Bool {
         return storage.object(forKey: Keys.AUTH_TOKEN.rawValue) != nil
     }
     
-    public static func hasSession() -> Bool {
+    open class func hasSession() -> Bool {
         return storage.object(forKey: Keys.SESSION.rawValue) != nil
     }
     
-    static func getStorage() -> UserDefaults {
+    class func getStorage() -> UserDefaults {
         return storage
     }
     
-    public static func getStoredSession() -> AldoSession? {
+    open class func getStoredSession() -> AldoSession? {
         if let objSession = storage.object(forKey: Keys.SESSION.rawValue) {
             let sessionData = objSession as! Data
             let session: AldoSession = NSKeyedUnarchiver.unarchiveObject(with: sessionData) as! AldoSession
@@ -65,7 +65,7 @@ open class Aldo {
         return nil
     }
     
-    public static func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
+    open class func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
         let objToken = storage.object(forKey: Keys.AUTH_TOKEN.rawValue)
         let token: String = (objToken != nil) ? ":\(objToken as! String)" : ""
         
@@ -91,32 +91,32 @@ open class Aldo {
         }
     }
     
-    public static func requestAuthToken(callback: Callback? = nil) {
+    open class func requestAuthToken(callback: Callback? = nil) {
         let command: String = AldoRequest.REQUEST_AUTH_TOKEN.rawValue
         request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
-    public static func createSession(username: String, callback: Callback? = nil) {
+    open class func createSession(username: String, callback: Callback? = nil) {
         let command: String = String(format: AldoRequest.SESSION_CREATE.rawValue, username)
         request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
-    public static func joinSession(username: String, token: String, callback: Callback? = nil) {
+    open class func joinSession(username: String, token: String, callback: Callback? = nil) {
         let command: String = String(format: AldoRequest.SESSION_JOIN.rawValue, token, username)
         request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
-    public static func requestSessionInfo(callback: Callback? = nil) {
+    open class func requestSessionInfo(callback: Callback? = nil) {
         let command: String = AldoRequest.SESSION_INFO.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    public static func requestSessionPlayers(callback: Callback? = nil) {
+    open class func requestSessionPlayers(callback: Callback? = nil) {
         let command: String = AldoRequest.SESSION_PLAYERS.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    public static func requestSessionStateChange(newState: AldoSession.State, callback: Callback? = nil) {
+    open class func changeSessionState(newState: AldoSession.State, callback: Callback? = nil) {
         var command: String
         
         switch newState {
@@ -134,22 +134,22 @@ open class Aldo {
         request(command: command, method: .put, parameters: [:], callback: callback)
     }
     
-    public static func requestSessionDeletion(callback: Callback? = nil) {
+    open class func deleteSession(callback: Callback? = nil) {
         let command: String = AldoRequest.SESSION_DELETE.rawValue
         request(command: command, method: .delete, parameters: [:], callback: callback)
     }
     
-    public static func requestDevicePlayers(callback: Callback? = nil) {
+    open class func requestDevicePlayers(callback: Callback? = nil) {
         let command: String = AldoRequest.PLAYER_ALL.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    public static func requestPlayerInfo(callback: Callback? = nil) {
+    open class func requestPlayerInfo(callback: Callback? = nil) {
         let command: String = AldoRequest.PLAYER_INFO.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    public static func requestUsernameUpdate(username: String, callback: Callback? = nil) {
+    open class func updateUsername(username: String, callback: Callback? = nil) {
         let command: String = String(format: AldoRequest.PLAYER_USERNAME_UPDATE.rawValue, username)
         request(command: command, method: .put, parameters: [:], callback: callback)
     }
