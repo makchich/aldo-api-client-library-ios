@@ -1,7 +1,8 @@
 use_frameworks!
 
 target 'Aldo_Example' do
-  pod 'SwiftLint'  
+    pod 'MockFive', :git => 'https://github.com/makchich/MockFive.git'
+  pod 'SwiftLint'
   pod 'Alamofire', '~> 4.0'
   pod 'Aldo', :path => '../'
 
