@@ -26,7 +26,7 @@ public enum AldoRequest: String {
     case PLAYER_USERNAME_UPDATE = "/player/username/%@"
 }
 
-public class Aldo {
+open class Aldo {
     
     private static let storage = UserDefaults.standard
     enum Keys: String {
