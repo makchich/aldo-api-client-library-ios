@@ -9,32 +9,34 @@
 import Foundation
 import Alamofire
 
+public enum AldoRequest: String {
+    case REQUEST_AUTH_TOKEN = "/token"
+    case SESSION_CREATE = "/session/username/"
+    case SESSION_JOIN = "/session/join/%@/username/%@"
+    case SESSION_DELETE = "/session/delete"
+    case SESSION_PLAYERS = "/session/players"
+}
+
 public class Aldo {
     
     private static let storage = UserDefaults.standard
-    private static let authTokenStorageKey = "AUTH_TOKEN"
+    enum Keys: String {
+        case AUTH_TOKEN = "AUTH_TOKEN"
+        case SESSION = "SESSION"
+    }
     
     private static var HOST_ADDRESS: String = "127.0.0.1"
     private static var PORT: Int = 4567
     
     private static var ID: String = UIDevice.current.identifierForVendor!.uuidString
     
-    private enum Keys: String {
-        case AUTH_TOKEN = "AUTH_TOKEN"
-        case SESSION = "SESSION"
-    }
-    
-    private enum Command: String {
-        case REQUEST_AUTH_TOKEN = "/token"
-        case SESSION_CREATE = "/session/username/"
-        case SESSION_JOIN = "/session/join/%@/username/%@"
-        case SESSION_DELETE = "/session/delete"
-        case SESSION_PLAYERS = "/session/players"
-    }
-    
     public static func setHostAddress(address: String, port: Int = 4567) {
         HOST_ADDRESS = address
         PORT = port
+    }
+    
+    static func getStorage() -> UserDefaults {
+        return storage
     }
     
     public static func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback) {
@@ -58,15 +60,15 @@ public class Aldo {
                 result = JSON as! NSDictionary
             }
             let statusCode: Int = response.response!.statusCode
-            callback.onResponse(responseCode: statusCode, response: result)
+            callback.onResponse(request: command, responseCode: statusCode, response: result)
         }
     }
     
     public static func requestAuthToken(callback: Callback) {
-        let command: Command = Command.REQUEST_AUTH_TOKEN
-        let authTokenCallback: Callback = AuthTokenCallback(callback: callback)
+        let command: String = AldoRequest.REQUEST_AUTH_TOKEN.rawValue
+        let mainCallback: Callback = AldoMainCallback(callback: callback)
         
-        request(command: command.rawValue, method: .post, parameters: [:], callback: authTokenCallback)
+        request(command: command, method: .post, parameters: [:], callback: mainCallback)
     }
     
     public static func hasAuthToken() -> Bool {
@@ -74,28 +76,28 @@ public class Aldo {
     }
     
     public static func createSession(username: String, callback: Callback) {
-        let command: String = "\(Command.SESSION_CREATE.rawValue)\(username)"
-        let createSessionCallback: Callback = CreateSessionCallback(username: username, callback: callback)
+        let command: String = "\(AldoRequest.SESSION_CREATE.rawValue)\(username)"
+        let mainCallback: Callback = AldoMainCallback(callback: callback)
         
-        request(command: command, method: .post, parameters: [:], callback: createSessionCallback)
+        request(command: command, method: .post, parameters: [:], callback: mainCallback)
     }
     
     public static func joinSession(username: String, token: String, callback: Callback) {
-        let command: String = String(format: Command.SESSION_JOIN.rawValue, token, username)
-        let joinSessionCallback: Callback = JoinSessionCallback(username: username, callback: callback)
+        let command: String = String(format: AldoRequest.SESSION_JOIN.rawValue, token, username)
+        let mainCallback: Callback = AldoMainCallback(callback: callback)
         
-        request(command: command, method: .post, parameters: [:], callback: joinSessionCallback)
+        request(command: command, method: .post, parameters: [:], callback: mainCallback)
     }
     
     public static func deleteSession(callback: Callback) {
-        let command: String = Command.SESSION_DELETE.rawValue
-        let deleteSessionCallback: Callback = DeleteSessionCallback(callback: callback)
+        let command: String = AldoRequest.SESSION_DELETE.rawValue
+        let mainCallback: Callback = AldoMainCallback(callback: callback)
         
-        request(command: command, method: .delete, parameters: [:], callback: deleteSessionCallback)
+        request(command: command, method: .delete, parameters: [:], callback: mainCallback)
     }
     
     public static func getSessionPlayers(callback: Callback) {
-        let command: String = Command.SESSION_PLAYERS.rawValue
+        let command: String = AldoRequest.SESSION_PLAYERS.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
@@ -110,92 +112,5 @@ public class Aldo {
             return session
         }
         return nil
-    }
-    
-    private class AuthTokenCallback: Callback {
-        
-        private var callback: Callback
-        
-        public init(callback: Callback) {
-            self.callback = callback
-        }
-        
-        public func onResponse(responseCode: Int, response: NSDictionary) {
-            if(responseCode == 200) {
-                storage.set(response["token"], forKey: Keys.AUTH_TOKEN.rawValue)
-            }
-            callback.onResponse(responseCode: responseCode, response: response)
-        }
-    }
-    
-    private class CreateSessionCallback: Callback {
-        
-        private var username: String
-        private var callback: Callback
-        
-        public init(username: String, callback: Callback) {
-            self.username = username
-            self.callback = callback
-        }
-        
-        public func onResponse(responseCode: Int, response: NSDictionary) {
-            if(responseCode == 200) {
-                let data: [String: String] = [
-                    "sessionID": response["sessionID"] as! String,
-                    "playerID": response["playerID"] as! String,
-                    "modToken": response["modToken"] as! String,
-                    "userToken": response["userToken"] as! String,
-                    "username": username
-                ]
-                let session: AldoSession = AldoSession(data: data)
-                let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
-                storage.set(sessionData, forKey: Keys.SESSION.rawValue)
-            }
-            callback.onResponse(responseCode: responseCode, response: response)
-        }
-    }
-    
-    private class JoinSessionCallback: Callback {
-        
-        private var username: String
-        private var callback: Callback
-        
-        public init(username: String, callback: Callback) {
-            self.username = username
-            self.callback = callback
-        }
-        
-        public func onResponse(responseCode: Int, response: NSDictionary) {
-            if(responseCode == 200) {
-                let data: [String: String] = [
-                    "sessionID": response["sessionID"] as! String,
-                    "playerID": response["playerID"] as! String,
-                    "modToken": "",
-                    "userToken": "",
-                    "username": username
-                ]
-                let session: AldoSession = AldoSession(data: data)
-                let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
-                storage.set(sessionData, forKey: Keys.SESSION.rawValue)
-            }
-            callback.onResponse(responseCode: responseCode, response: response)
-        }
-    }
-    
-    private class DeleteSessionCallback: Callback {
-        
-        private var callback: Callback
-        
-        public init(callback: Callback) {
-            self.callback = callback
-        }
-        
-        public func onResponse(responseCode: Int, response: NSDictionary) {
-            if(responseCode == 200) {
-                storage.removeObject(forKey: Keys.SESSION.rawValue)
-            }
-            
-            callback.onResponse(responseCode: responseCode, response: response)
-        }
     }
 }
