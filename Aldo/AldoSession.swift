@@ -10,6 +10,11 @@ import Foundation
 
 public class AldoSession: NSObject, NSCoding {
     
+    public enum State: Int {
+        case PLAY = 1
+        case PAUSE = 0
+    }
+    
     private var sessionId: String
     private var playerId: String
     private var modToken: String

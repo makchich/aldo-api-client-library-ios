@@ -52,10 +52,23 @@ public class AldoMainCallback: Callback {
                 let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
                 Aldo.getStorage().set(sessionData, forKey: Aldo.Keys.SESSION.rawValue)
                 break
+            case AldoRequest.SESSION_INFO.rawValue:
+                break
+            case AldoRequest.SESSION_PLAYERS.rawValue:
+                
+                break
+            case AldoRequest.SESSION_STATE_PLAY.rawValue:
+                break
+            case AldoRequest.SESSION_STATE_PAUSE.rawValue:
+                break
             case AldoRequest.SESSION_DELETE.rawValue:
                 Aldo.getStorage().removeObject(forKey: Aldo.Keys.SESSION.rawValue)
                 break
-            case AldoRequest.SESSION_PLAYERS.rawValue:
+            case AldoRequest.PLAYER_ALL.rawValue:
+                break
+            case AldoRequest.PLAYER_INFO.rawValue:
+                break
+            case AldoRequest.PLAYER_USERNAME_UPDATE.rawValue:
                 break
             default:
                 break

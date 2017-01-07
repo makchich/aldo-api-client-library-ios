@@ -10,11 +10,20 @@ import Foundation
 import Alamofire
 
 public enum AldoRequest: String {
+    case REQUEST_EMPTY = "/"
     case REQUEST_AUTH_TOKEN = "/token"
-    case SESSION_CREATE = "/session/username/"
+    
+    case SESSION_CREATE = "/session/username/%@"
     case SESSION_JOIN = "/session/join/%@/username/%@"
-    case SESSION_DELETE = "/session/delete"
+    case SESSION_INFO = "/session"
     case SESSION_PLAYERS = "/session/players"
+    case SESSION_STATE_PLAY = "/session/play"
+    case SESSION_STATE_PAUSE = "/session/pause"
+    case SESSION_DELETE = "/session/delete"
+    
+    case PLAYER_ALL = "/player/all"
+    case PLAYER_INFO = "/player"
+    case PLAYER_USERNAME_UPDATE = "/player/username/%@"
 }
 
 public class Aldo {
@@ -35,17 +44,34 @@ public class Aldo {
         PORT = port
     }
     
+    public static func hasAuthToken() -> Bool {
+        return storage.object(forKey: Keys.AUTH_TOKEN.rawValue) != nil
+    }
+    
+    public static func hasSession() -> Bool {
+        return storage.object(forKey: Keys.SESSION.rawValue) != nil
+    }
+    
     static func getStorage() -> UserDefaults {
         return storage
     }
     
-    public static func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback) {
+    public static func getStoredSession() -> AldoSession? {
+        if let objSession = storage.object(forKey: Keys.SESSION.rawValue) {
+            let sessionData = objSession as! Data
+            let session: AldoSession = NSKeyedUnarchiver.unarchiveObject(with: sessionData) as! AldoSession
+            return session
+        }
+        return nil
+    }
+    
+    public static func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
         let objToken = storage.object(forKey: Keys.AUTH_TOKEN.rawValue)
         let token: String = (objToken != nil) ? ":\(objToken as! String)" : ""
         
         
         var player: String = ""
-        if let session = Aldo.getSession() {
+        if let session = Aldo.getStoredSession() {
             player = ":\(session.getPlayerID())"
         }
         
@@ -60,57 +86,71 @@ public class Aldo {
                 result = JSON as! NSDictionary
             }
             let statusCode: Int = response.response!.statusCode
-            callback.onResponse(request: command, responseCode: statusCode, response: result)
+            
+            AldoMainCallback(callback: callback).onResponse(request: command, responseCode: statusCode, response: result)
         }
     }
     
-    public static func requestAuthToken(callback: Callback) {
+    public static func requestAuthToken(callback: Callback? = nil) {
         let command: String = AldoRequest.REQUEST_AUTH_TOKEN.rawValue
-        let mainCallback: Callback = AldoMainCallback(callback: callback)
-        
-        request(command: command, method: .post, parameters: [:], callback: mainCallback)
+        request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
-    public static func hasAuthToken() -> Bool {
-        return storage.object(forKey: Keys.AUTH_TOKEN.rawValue) != nil
+    public static func createSession(username: String, callback: Callback? = nil) {
+        let command: String = String(format: AldoRequest.SESSION_CREATE.rawValue, username)
+        request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
-    public static func createSession(username: String, callback: Callback) {
-        let command: String = "\(AldoRequest.SESSION_CREATE.rawValue)\(username)"
-        let mainCallback: Callback = AldoMainCallback(callback: callback)
-        
-        request(command: command, method: .post, parameters: [:], callback: mainCallback)
-    }
-    
-    public static func joinSession(username: String, token: String, callback: Callback) {
+    public static func joinSession(username: String, token: String, callback: Callback? = nil) {
         let command: String = String(format: AldoRequest.SESSION_JOIN.rawValue, token, username)
-        let mainCallback: Callback = AldoMainCallback(callback: callback)
-        
-        request(command: command, method: .post, parameters: [:], callback: mainCallback)
+        request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
-    public static func deleteSession(callback: Callback) {
-        let command: String = AldoRequest.SESSION_DELETE.rawValue
-        let mainCallback: Callback = AldoMainCallback(callback: callback)
-        
-        request(command: command, method: .delete, parameters: [:], callback: mainCallback)
+    public static func requestSessionInfo(callback: Callback? = nil) {
+        let command: String = AldoRequest.SESSION_INFO.rawValue
+        request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    public static func getSessionPlayers(callback: Callback) {
+    public static func requestSessionPlayers(callback: Callback? = nil) {
         let command: String = AldoRequest.SESSION_PLAYERS.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    public static func hasSession() -> Bool {
-        return storage.object(forKey: Keys.SESSION.rawValue) != nil
+    public static func requestSessionStateChange(newState: AldoSession.State, callback: Callback? = nil) {
+        var command: String
+        
+        switch newState {
+        case AldoSession.State.PLAY:
+            command = AldoRequest.SESSION_STATE_PLAY.rawValue
+            break
+        case AldoSession.State.PAUSE:
+            command = AldoRequest.SESSION_STATE_PAUSE.rawValue
+            break
+        default:
+            command = AldoRequest.REQUEST_EMPTY.rawValue
+            break
+        }
+        
+        request(command: command, method: .put, parameters: [:], callback: callback)
     }
     
-    public static func getSession() -> AldoSession? {
-        if let objSession = storage.object(forKey: Keys.SESSION.rawValue) {
-            let sessionData = objSession as! Data
-            let session: AldoSession = NSKeyedUnarchiver.unarchiveObject(with: sessionData) as! AldoSession
-            return session
-        }
-        return nil
+    public static func requestSessionDeletion(callback: Callback? = nil) {
+        let command: String = AldoRequest.SESSION_DELETE.rawValue
+        request(command: command, method: .delete, parameters: [:], callback: callback)
+    }
+    
+    public static func requestDevicePlayers(callback: Callback? = nil) {
+        let command: String = AldoRequest.PLAYER_ALL.rawValue
+        request(command: command, method: .get, parameters: [:], callback: callback)
+    }
+    
+    public static func requestPlayerInfo(callback: Callback? = nil) {
+        let command: String = AldoRequest.PLAYER_INFO.rawValue
+        request(command: command, method: .get, parameters: [:], callback: callback)
+    }
+    
+    public static func requestUsernameUpdate(username: String, callback: Callback? = nil) {
+        let command: String = String(format: AldoRequest.PLAYER_USERNAME_UPDATE.rawValue, username)
+        request(command: command, method: .put, parameters: [:], callback: callback)
     }
 }
