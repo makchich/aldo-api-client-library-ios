@@ -2,32 +2,22 @@ PODS:
   - Alamofire (4.2.0)
   - Aldo (0.5.0):
     - Alamofire (~> 4.0)
-  - MockFive (0.4.0)
   - SwiftLint (0.15.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - Aldo (from `../`)
-  - MockFive (from `https://github.com/makchich/MockFive.git`)
   - SwiftLint
 
 EXTERNAL SOURCES:
   Aldo:
     :path: ../
-  MockFive:
-    :git: https://github.com/makchich/MockFive.git
-
-CHECKOUT OPTIONS:
-  MockFive:
-    :commit: a18b7bbfa04a36c4953c0d2388f2aa5ff53b7167
-    :git: https://github.com/makchich/MockFive.git
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   Aldo: 4ae4a95fa2bc25c359478ab1129ad9d0e76bade8
-  MockFive: 12eeebc3433e39da5a0e0028a1d263324074a72e
   SwiftLint: d73999f81682ab8114d6408c89f83177b2c197d7
 
-PODFILE CHECKSUM: 44e1fa82be23b7e98e569b7f29460b0b747b3104
+PODFILE CHECKSUM: 42f20deb33c809a1cb8550a3b8b734d40d5de015
 
 COCOAPODS: 1.1.1

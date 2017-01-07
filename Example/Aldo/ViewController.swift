@@ -31,7 +31,7 @@ class ViewController: UIViewController, Callback {
         // Dispose of any resources that can be recreated.
     }
     
-    func onResponse(responseCode: Int, response: NSDictionary) {
+    func onResponse(request: String, responseCode: Int, response: NSDictionary) {
         // Do Nothing
         
         print(responseCode)
