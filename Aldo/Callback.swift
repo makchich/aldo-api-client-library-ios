@@ -16,7 +16,7 @@ public protocol Callback {
 
 public class AldoMainCallback: Callback {
     
-    private var callback: Callback
+    private var callback: Callback?
     
     public init(callback: Callback? = nil) {
         self.callback = callback!
@@ -76,7 +76,7 @@ public class AldoMainCallback: Callback {
         }
         
         if callback != nil {
-            callback.onResponse(request: request, responseCode: responseCode, response: response)
+            callback?.onResponse(request: request, responseCode: responseCode, response: response)
         }
     }
     

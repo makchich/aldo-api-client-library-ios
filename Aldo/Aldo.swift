@@ -117,7 +117,7 @@ open class Aldo {
     }
     
     open class func changeSessionState(newState: AldoSession.State, callback: Callback? = nil) {
-        var command: String
+        var command: String = AldoRequest.REQUEST_EMPTY.rawValue
         
         switch newState {
         case AldoSession.State.PLAY:
@@ -125,9 +125,6 @@ open class Aldo {
             break
         case AldoSession.State.PAUSE:
             command = AldoRequest.SESSION_STATE_PAUSE.rawValue
-            break
-        default:
-            command = AldoRequest.REQUEST_EMPTY.rawValue
             break
         }
         
