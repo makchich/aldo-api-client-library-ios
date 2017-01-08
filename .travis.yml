@@ -24,11 +24,14 @@ notifications:
 before_install:
   - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
 script:
-- set -o pipefail
-- xcodebuild -version
-- xcodebuild -showsdks
+  - set -o pipefail
+  - xcodebuild -version
+  - xcodebuild -showsdks
 
-- xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES test | xcpretty
+  - xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES test | xcpretty
 # - xcodebuild test -workspace Example/Aldo.xcworkspace -scheme Aldo-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
 
-- pod lib lint
+  - pod lib lint
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
