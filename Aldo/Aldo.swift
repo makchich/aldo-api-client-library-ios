@@ -42,7 +42,7 @@ public enum AldoRequest: String {
 open class Aldo {
     
     private static let storage = UserDefaults.standard
-    enum Keys: String {
+    public enum Keys: String {
         case AUTH_TOKEN = "AUTH_TOKEN"
         case SESSION = "SESSION"
     }
@@ -65,7 +65,7 @@ open class Aldo {
         return storage.object(forKey: Keys.SESSION.rawValue) != nil
     }
     
-    class func getStorage() -> UserDefaults {
+    public class func getStorage() -> UserDefaults {
         return storage
     }
     

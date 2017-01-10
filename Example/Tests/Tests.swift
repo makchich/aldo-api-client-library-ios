@@ -1,5 +1,6 @@
 import UIKit
 import XCTest
+import Aldo
 
 class Tests: XCTestCase {
     
@@ -27,5 +28,16 @@ class Tests: XCTestCase {
         
         XCTAssertEqual(MockAldo.getHostAddress(), address)
         XCTAssertEqual(MockAldo.getPort(), port)
+    }
+    
+    func testRequestAuthToken() {
+        MockAldo.requestAuthToken()
+        
+        let token: String = "1111-2222-3333-4444-5555"
+        if let storedToken = MockAldo.getStorage().object(forKey: Aldo.Keys.AUTH_TOKEN.rawValue) {
+            XCTAssertEqual(storedToken as! String, token)
+            return
+        }
+        XCTFail()
     }
 }

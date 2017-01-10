@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.2.0)
-  - Aldo (0.5.0):
+  - Aldo (0.5.2):
     - Alamofire (~> 4.0)
   - SwiftLint (0.15.0)
 
@@ -15,9 +15,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  Aldo: 4ae4a95fa2bc25c359478ab1129ad9d0e76bade8
+  Aldo: 6e9e2007ce4247e2caaa4eb6ef2ee0ea2c3cf378
   SwiftLint: d73999f81682ab8114d6408c89f83177b2c197d7
 
-PODFILE CHECKSUM: 42f20deb33c809a1cb8550a3b8b734d40d5de015
+PODFILE CHECKSUM: 3d7358703b52fe06f1ca141f49c2f5bf87b84153
 
 COCOAPODS: 1.1.1

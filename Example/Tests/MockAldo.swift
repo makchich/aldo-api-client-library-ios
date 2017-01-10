@@ -1,4 +1,5 @@
 import Foundation
+import Alamofire
 import Aldo
 
 public class MockAldo: Aldo {
@@ -19,8 +20,23 @@ public class MockAldo: Aldo {
         mockPort = port
     }
     
+    override public class func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
+        var response: Dictionary<String, String> = [:]
+        switch command {
+        case Regex(pattern: AldoRequest.REQUEST_AUTH_TOKEN.regex()):
+            response["deviceID"] = UIDevice.current.identifierForVendor!.uuidString
+            response["token"] = "1111-2222-3333-4444-5555"
+            break
+        default:
+            break
+        }
+        AldoMainCallback(callback: callback).onResponse(request: command, responseCode: 200, response: response as NSDictionary)
+    }
+    
     override public class func requestAuthToken(callback: Callback? = nil) {
-        
+        let command: String = AldoRequest.REQUEST_AUTH_TOKEN.rawValue
+        MockAldo.request(command: command, method: .post, parameters: [:], callback: callback)
+
     }
     
     override public class func createSession(username: String, callback: Callback? = nil) {
