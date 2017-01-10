@@ -25,10 +25,10 @@ public class AldoMainCallback: Callback {
     public func onResponse(request: String, responseCode: Int, response: NSDictionary) {
         if responseCode == 200 {
             switch request {
-            case AldoRequest.REQUEST_AUTH_TOKEN.rawValue:
+            case Regex(pattern: AldoRequest.REQUEST_AUTH_TOKEN.regex()):
                 Aldo.getStorage().set(response["token"], forKey: Aldo.Keys.AUTH_TOKEN.rawValue)
                 break
-            case AldoRequest.SESSION_CREATE.rawValue:
+            case Regex(pattern: AldoRequest.SESSION_CREATE.regex()):
                 let data: [String: String] = [
                     "sessionID": response["sessionID"] as! String,
                     "playerID": response["playerID"] as! String,
@@ -40,7 +40,7 @@ public class AldoMainCallback: Callback {
                 let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
                 Aldo.getStorage().set(sessionData, forKey: Aldo.Keys.SESSION.rawValue)
                 break
-            case AldoRequest.SESSION_JOIN.rawValue:
+            case Regex(pattern: AldoRequest.SESSION_JOIN.regex()):
                 let data: [String: String] = [
                     "sessionID": response["sessionID"] as! String,
                     "playerID": response["playerID"] as! String,
@@ -52,23 +52,23 @@ public class AldoMainCallback: Callback {
                 let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
                 Aldo.getStorage().set(sessionData, forKey: Aldo.Keys.SESSION.rawValue)
                 break
-            case AldoRequest.SESSION_INFO.rawValue:
+            case Regex(pattern: AldoRequest.SESSION_INFO.regex()):
                 break
-            case AldoRequest.SESSION_PLAYERS.rawValue:
+            case Regex(pattern: AldoRequest.SESSION_PLAYERS.regex()):
                 
                 break
-            case AldoRequest.SESSION_STATE_PLAY.rawValue:
+            case Regex(pattern: AldoRequest.SESSION_STATE_PLAY.regex()):
                 break
-            case AldoRequest.SESSION_STATE_PAUSE.rawValue:
+            case Regex(pattern: AldoRequest.SESSION_STATE_PAUSE.regex()):
                 break
-            case AldoRequest.SESSION_DELETE.rawValue:
+            case Regex(pattern: AldoRequest.SESSION_DELETE.regex()):
                 Aldo.getStorage().removeObject(forKey: Aldo.Keys.SESSION.rawValue)
                 break
-            case AldoRequest.PLAYER_ALL.rawValue:
+            case Regex(pattern: AldoRequest.PLAYER_ALL.regex()):
                 break
-            case AldoRequest.PLAYER_INFO.rawValue:
+            case Regex(pattern: AldoRequest.PLAYER_INFO.regex()):
                 break
-            case AldoRequest.PLAYER_USERNAME_UPDATE.rawValue:
+            case Regex(pattern: AldoRequest.PLAYER_USERNAME_UPDATE.regex()):
                 break
             default:
                 break
