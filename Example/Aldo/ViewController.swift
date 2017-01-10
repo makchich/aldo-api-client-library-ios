@@ -9,7 +9,7 @@
 import UIKit
 import Aldo
 
-class ViewController: UIViewController, Callback {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,24 +18,12 @@ class ViewController: UIViewController, Callback {
         Aldo.setHostAddress(address: "https://expeditionmundus.herokuapp.com")
         
         if !Aldo.hasAuthToken() {
-            Aldo.requestAuthToken(callback: self)
+            Aldo.requestAuthToken()
         }
         
         if !Aldo.hasSession() {
-            Aldo.createSession(username: "aldo_demo", callback: self)
+            Aldo.createSession(username: "aldo_demo")
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func onResponse(request: String, responseCode: Int, response: NSDictionary) {
-        // Do Nothing
-        
-        print(responseCode)
-        print(response)
     }
 
 }

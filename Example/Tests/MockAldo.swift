@@ -1,6 +1,6 @@
 import Foundation
 import Alamofire
-import Aldo
+@testable import Aldo
 
 public class MockAldo: Aldo {
     
@@ -20,13 +20,28 @@ public class MockAldo: Aldo {
         mockPort = port
     }
     
-    override public class func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
+    override open class func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
         var response: Dictionary<String, String> = [:]
+        var components = command.components(separatedBy: "/")
+        
+        print(command)
+        print("\(components)")
+        
         switch command {
         case Regex(pattern: AldoRequest.REQUEST_AUTH_TOKEN.regex()):
             response["deviceID"] = UIDevice.current.identifierForVendor!.uuidString
             response["token"] = "1111-2222-3333-4444-5555"
             break
+        case Regex(pattern: AldoRequest.SESSION_CREATE.regex()):
+            response["sessionID"] = "0000-2222-4444-6666-8888"
+            response["playerID"] = "1111-3333-5555-7777-9999"
+            response["modToken"] = "acegik"
+            response["userToken"] = "bdfhj"
+            response["username"] = components[3]
+        case Regex(pattern: AldoRequest.SESSION_JOIN.regex()):
+            response["sessionID"] = "0000-2222-4444-6666-8888"
+            response["playerID"] = "1111-3333-5555-7777-9999"
+            response["username"] = components[5]
         default:
             break
         }
@@ -36,15 +51,16 @@ public class MockAldo: Aldo {
     override public class func requestAuthToken(callback: Callback? = nil) {
         let command: String = AldoRequest.REQUEST_AUTH_TOKEN.rawValue
         MockAldo.request(command: command, method: .post, parameters: [:], callback: callback)
-
     }
     
     override public class func createSession(username: String, callback: Callback? = nil) {
-        
+        let command: String = String(format: AldoRequest.SESSION_CREATE.rawValue, username)
+        MockAldo.request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
     override public class func joinSession(username: String, token: String, callback: Callback? = nil) {
-        
+        let command: String = String(format: AldoRequest.SESSION_JOIN.rawValue, token, username)
+        MockAldo.request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
     override open class func requestSessionInfo(callback: Callback? = nil) {
