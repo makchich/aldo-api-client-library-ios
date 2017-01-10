@@ -13,6 +13,7 @@
 		1B9EDEDC964E6B08F78920B4F4B9DB84 /* Alamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6238DBAB58A70F579BB06C1AAA669C3A /* Alamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C3C7BC55391F5D9B61CCC7B16A6DC6A /* Aldo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 554F1A7DB070AFEED121C93D4E4F3B4F /* Aldo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3626B94094672CB1C9DEA32B9F9502E1 /* TaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D03CCB265D41E8DE127FB1DBDA966A9 /* TaskDelegate.swift */; };
+		3FCA52D81E24469A006251C5 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCA52D71E24469A006251C5 /* Regex.swift */; };
 		5387216E723A3C68E851CA15573CDD71 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8516EAC3F16764FC2C9399468591F25 /* Request.swift */; };
 		5CA41E3ED61DF3619FDBFA35BD47E5E6 /* Callback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C16D51A90897F9C34DEFFA6D9DB7BBF /* Callback.swift */; };
 		61200D01A1855D7920CEF835C8BE00B0 /* DispatchQueue+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F1566D1380BAD3555888346E02FA87 /* DispatchQueue+Alamofire.swift */; };
@@ -84,6 +85,7 @@
 		3883C31BDFD0DD85995AADDE97494FA0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F31ADCEC7CD8E4C3B6858D875424BFA /* Pods-Aldo_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Aldo_Example-umbrella.h"; sourceTree = "<group>"; };
 		3F9B2E024A80A62FE090406312870D33 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		3FCA52D71E24469A006251C5 /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		4329D16298C06786FFCEF9E36CD23DA5 /* SessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionManager.swift; path = Source/SessionManager.swift; sourceTree = "<group>"; };
 		4687FC85F55D7FF0017BF3F73CBF1A33 /* Pods-Aldo_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Aldo_Tests-resources.sh"; sourceTree = "<group>"; };
 		474C8D80B0C78C6024774112FBA0ED40 /* Pods-Aldo_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Aldo_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				01D10CFAD6FCBDE9204DC9CF84867465 /* Aldo.swift */,
 				2B86FBFAC366AB4A35ECADE851064041 /* AldoSession.swift */,
 				1C16D51A90897F9C34DEFFA6D9DB7BBF /* Callback.swift */,
+				3FCA52D71E24469A006251C5 /* Regex.swift */,
 			);
 			path = Aldo;
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CADCD235EBE7D659D135B6D1B745C85 /* Aldo-dummy.m in Sources */,
+				3FCA52D81E24469A006251C5 /* Regex.swift in Sources */,
 				CDB2EE00EBFD2BB6D6397095999C6283 /* Aldo.swift in Sources */,
 				1476D8AB9048B0278E2569A623EFAF11 /* AldoSession.swift in Sources */,
 				5CA41E3ED61DF3619FDBFA35BD47E5E6 /* Callback.swift in Sources */,
