@@ -19,7 +19,7 @@ public class AldoMainCallback: Callback {
     private var callback: Callback?
     
     public init(callback: Callback? = nil) {
-        self.callback = callback!
+        self.callback = callback
     }
     
     public func onResponse(request: String, responseCode: Int, response: NSDictionary) {
