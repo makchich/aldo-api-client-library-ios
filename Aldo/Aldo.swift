@@ -24,6 +24,19 @@ public enum AldoRequest: String {
     case PLAYER_ALL = "/player/all"
     case PLAYER_INFO = "/player"
     case PLAYER_USERNAME_UPDATE = "/player/username/%@"
+    
+    public func regex() -> String {
+        switch self {
+        case .SESSION_CREATE:
+            return String(format: self.rawValue, "(.)+?")
+        case .SESSION_JOIN:
+            return String(format: self.rawValue, "(.)+?", "(.)+?")
+        case .PLAYER_USERNAME_UPDATE:
+            return String(format: self.rawValue, "(.)+?")
+        default:
+            return self.rawValue
+        }
+    }
 }
 
 open class Aldo {
