@@ -16,6 +16,8 @@ public class MockAldo: Aldo {
     }
     
     override public class func setHostAddress(address: String, port: Int = 4567) {
+        super.setHostAddress(address: address, port: port)
+        
         mockAddress = address
         mockPort = port
     }
@@ -23,9 +25,6 @@ public class MockAldo: Aldo {
     override open class func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
         var response: Dictionary<String, String> = [:]
         var components = command.components(separatedBy: "/")
-        
-        print(command)
-        print("\(components)")
         
         switch command {
         case Regex(pattern: AldoRequest.REQUEST_AUTH_TOKEN.regex()):

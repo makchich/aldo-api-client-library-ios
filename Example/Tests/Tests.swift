@@ -37,7 +37,9 @@ class Tests: XCTestCase {
     }
     
     func testRequestAuthToken() {
+        XCTAssertFalse(MockAldo.hasAuthToken())
         MockAldo.requestAuthToken()
+        XCTAssertTrue(MockAldo.hasAuthToken())
         
         let token: String = "1111-2222-3333-4444-5555"
         if let storedToken = MockAldo.getStorage().object(forKey: MockAldo.Keys.AUTH_TOKEN.rawValue) {
@@ -49,9 +51,11 @@ class Tests: XCTestCase {
     
     func testCreateSession() {
         XCTAssertNil(MockAldo.getStoredSession())
+        XCTAssertFalse(MockAldo.hasSession())
         
         var username: String = "create_session_test_username"
         MockAldo.createSession(username: username)
+        XCTAssertTrue(MockAldo.hasSession())
         
         if let session: AldoSession = MockAldo.getStoredSession() {
             XCTAssertEqual(session.getSessionID(), "0000-2222-4444-6666-8888")
@@ -71,9 +75,11 @@ class Tests: XCTestCase {
     
     func testJoinSession() {
         XCTAssertNil(MockAldo.getStoredSession())
-
+        XCTAssertFalse(MockAldo.hasSession())
+        
         var username: String = "join_session_test_username"
         MockAldo.joinSession(username: username, token: "abcdef")
+        XCTAssertTrue(MockAldo.hasSession())
         
         if let session: AldoSession = MockAldo.getStoredSession() {
             XCTAssertEqual(session.getSessionID(), "0000-2222-4444-6666-8888")
