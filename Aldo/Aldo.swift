@@ -92,7 +92,7 @@ open class Aldo {
             "Authorization": "\(ID)\(token)\(player)"
         ]
         
-        Alamofire.request("\(HOST_ADDRESS)\(command)", method: method, parameters: parameters, headers: headers).responseJSON { response in
+        let r = Alamofire.request("\(HOST_ADDRESS)\(command)", method: method, parameters: parameters, encoding: AldoEncoding(), headers: headers).responseJSON { response in
             
             var result: NSDictionary = [:]
             if let JSON = response.result.value {
