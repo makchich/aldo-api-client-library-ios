@@ -10,20 +10,23 @@ import UIKit
 import Aldo
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        Aldo.setHostAddress(address: "https://expeditionmundus.herokuapp.com")
+        let username: String = "iPhone_Simulator"
         
-        if !Aldo.hasAuthToken() {
-            Aldo.requestAuthToken()
-        }
-        
-        if !Aldo.hasSession() {
-            Aldo.createSession(username: "aldo_demo")
-        }
+        Aldo.setHostAddress(address: "127.0.0.1")
+        Aldo.requestAuthToken()
+        Aldo.createSession(username: username)
+        Aldo.joinSession(username: username, token: "token")
+        Aldo.requestSessionInfo()
+        Aldo.requestSessionPlayers()
+        Aldo.changeSessionState(newState: AldoSession.State.PAUSE)
+        Aldo.deleteSession()
+        Aldo.requestPlayerInfo()
+        Aldo.requestDevicePlayers()
+        Aldo.updateUsername(username: "iPhone_Simulator_update")
     }
 
 }

@@ -53,16 +53,17 @@ public class AldoMainCallback: Callback {
                 Aldo.getStorage().set(sessionData, forKey: Aldo.Keys.SESSION.rawValue)
                 break
             case Regex(pattern: AldoRequest.SESSION_INFO.regex()):
+                print(response)
                 break
             case Regex(pattern: AldoRequest.SESSION_PLAYERS.regex()):
-                
                 break
             case Regex(pattern: AldoRequest.SESSION_STATE_PLAY.regex()):
                 break
             case Regex(pattern: AldoRequest.SESSION_STATE_PAUSE.regex()):
                 break
-            case Regex(pattern: AldoRequest.SESSION_DELETE.regex()):
+            case AldoRequest.SESSION_DELETE.regex():
                 Aldo.getStorage().removeObject(forKey: Aldo.Keys.SESSION.rawValue)
+                Aldo.getStorage().synchronize()
                 break
             case Regex(pattern: AldoRequest.PLAYER_ALL.regex()):
                 break

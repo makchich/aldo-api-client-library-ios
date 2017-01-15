@@ -37,10 +37,18 @@ public class MockAldo: Aldo {
             response["modToken"] = "acegik"
             response["userToken"] = "bdfhj"
             response["username"] = components[3]
+            break
         case Regex(pattern: AldoRequest.SESSION_JOIN.regex()):
             response["sessionID"] = "0000-2222-4444-6666-8888"
             response["playerID"] = "1111-3333-5555-7777-9999"
             response["username"] = components[5]
+            break
+        case Regex(pattern: AldoRequest.SESSION_INFO.regex()):
+            response["sessionID"] = "0000-2222-4444-6666-8888"
+            response["adminID"] = "1111-3333-5555-7777-9999"
+            response["status"] = "1"
+            response["created"] = "01-01-1970"
+            break
         default:
             break
         }
@@ -63,7 +71,8 @@ public class MockAldo: Aldo {
     }
     
     override open class func requestSessionInfo(callback: Callback? = nil) {
-        
+        let command: String = AldoRequest.SESSION_INFO.rawValue
+        MockAldo.request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
     override open class func requestSessionPlayers(callback: Callback? = nil) {

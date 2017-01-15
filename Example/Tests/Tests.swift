@@ -74,12 +74,8 @@ class Tests: XCTestCase {
     }
     
     func testJoinSession() {
-        XCTAssertNil(MockAldo.getStoredSession())
-        XCTAssertFalse(MockAldo.hasSession())
-        
         var username: String = "join_session_test_username"
-        MockAldo.joinSession(username: username, token: "abcdef")
-        XCTAssertTrue(MockAldo.hasSession())
+        joinSession(username: username)
         
         if let session: AldoSession = MockAldo.getStoredSession() {
             XCTAssertEqual(session.getSessionID(), "0000-2222-4444-6666-8888")
@@ -95,5 +91,21 @@ class Tests: XCTestCase {
             return
         }
         XCTFail()
+    }
+    
+    func testRequestSessionInfo() {
+        let username: String = "join_session_test_username"
+        joinSession(username: username)
+        
+        MockAldo.requestSessionInfo()
+    }
+    
+    private func joinSession(username: String) {
+        XCTAssertNil(MockAldo.getStoredSession())
+        XCTAssertFalse(MockAldo.hasSession())
+        
+        
+        MockAldo.joinSession(username: username, token: "abcdef")
+        XCTAssertTrue(MockAldo.hasSession())
     }
 }
