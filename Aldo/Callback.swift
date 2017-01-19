@@ -14,7 +14,7 @@ public protocol Callback {
     
 }
 
-public class AldoMainCallback: Callback {
+class AldoMainCallback: Callback {
     
     private var callback: Callback?
     
@@ -25,51 +25,43 @@ public class AldoMainCallback: Callback {
     public func onResponse(request: String, responseCode: Int, response: NSDictionary) {
         if responseCode == 200 {
             switch request {
-            case Regex(pattern: AldoRequest.REQUEST_AUTH_TOKEN.regex()):
+            case Regex(pattern: RequestURI.REQUEST_AUTH_TOKEN.regex()):
                 Aldo.getStorage().set(response["token"], forKey: Aldo.Keys.AUTH_TOKEN.rawValue)
                 break
-            case Regex(pattern: AldoRequest.SESSION_CREATE.regex()):
-                let data: [String: String] = [
-                    "sessionID": response["sessionID"] as! String,
-                    "playerID": response["playerID"] as! String,
-                    "modToken": response["modToken"] as! String,
-                    "userToken": response["userToken"] as! String,
-                    "username": response["username"] as! String
-                ]
-                let session: AldoSession = AldoSession(data: data)
-                let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
-                Aldo.getStorage().set(sessionData, forKey: Aldo.Keys.SESSION.rawValue)
+            case Regex(pattern: RequestURI.SESSION_CREATE.regex()):
+                savePlayer(response: response)
                 break
-            case Regex(pattern: AldoRequest.SESSION_JOIN.regex()):
-                let data: [String: String] = [
-                    "sessionID": response["sessionID"] as! String,
-                    "playerID": response["playerID"] as! String,
-                    "modToken": "",
-                    "userToken": "",
-                    "username": response["username"] as! String
-                ]
-                let session: AldoSession = AldoSession(data: data)
-                let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
-                Aldo.getStorage().set(sessionData, forKey: Aldo.Keys.SESSION.rawValue)
+            case Regex(pattern: RequestURI.SESSION_JOIN.regex()):
+                savePlayer(response: response)
                 break
-            case Regex(pattern: AldoRequest.SESSION_INFO.regex()):
-                print(response)
+            case Regex(pattern: RequestURI.SESSION_INFO.regex()):
+                let player = Aldo.getPlayer()!
+                let session = createSession(response: response)
+                
+                player.setSession(session: session)
+                Aldo.setPlayer(player: player)
                 break
-            case Regex(pattern: AldoRequest.SESSION_PLAYERS.regex()):
+            case Regex(pattern: RequestURI.SESSION_PLAYERS.regex()):
                 break
-            case Regex(pattern: AldoRequest.SESSION_STATE_PLAY.regex()):
+            case Regex(pattern: RequestURI.SESSION_STATE_PLAY.regex()):
+                let player = Aldo.getPlayer()!
+                player.getSession().setStatus(status: Session.Status.PLAYING)
+                
+                Aldo.setPlayer(player: player)
                 break
-            case Regex(pattern: AldoRequest.SESSION_STATE_PAUSE.regex()):
+            case Regex(pattern: RequestURI.SESSION_STATE_PAUSE.regex()):
+                let player = Aldo.getPlayer()!
+                player.getSession().setStatus(status: Session.Status.PAUSED)
+                
+                Aldo.setPlayer(player: player)
                 break
-            case AldoRequest.SESSION_DELETE.regex():
+            case Regex(pattern: RequestURI.SESSION_DELETE.regex()):
                 Aldo.getStorage().removeObject(forKey: Aldo.Keys.SESSION.rawValue)
                 Aldo.getStorage().synchronize()
                 break
-            case Regex(pattern: AldoRequest.PLAYER_ALL.regex()):
-                break
-            case Regex(pattern: AldoRequest.PLAYER_INFO.regex()):
-                break
-            case Regex(pattern: AldoRequest.PLAYER_USERNAME_UPDATE.regex()):
+            case Regex(pattern: RequestURI.PLAYER_USERNAME_UPDATE.regex()):
+                let player = Aldo.getPlayer()!
+                player.setUsername(username: response["username"] as! String)
                 break
             default:
                 break
@@ -79,6 +71,29 @@ public class AldoMainCallback: Callback {
         if callback != nil {
             callback?.onResponse(request: request, responseCode: responseCode, response: response)
         }
+    }
+    
+    private func createSession(response: NSDictionary) -> Session {
+        let sessionId = response["sessionID"] as! String
+        let adminId = response["adminID"] as! String
+        let tokens = (response["tokens"] != nil) ? response["tokens"] as! NSDictionary : [:]
+        let status = response["status"] as! Int
+        let created = response["created"] as! String
+        
+        return Session(id: sessionId, admin: adminId, tokens: tokens, status: status, created: created)
+    }
+    
+    private func savePlayer(response: NSDictionary) {
+        let id = response["playerID"] as! String
+        let username = response["username"] as! String
+        let sessionDictionary = response["session"] as! NSDictionary
+        let role = response["role"] as! Int
+        let score = response["score"] as! Int
+        
+        let session: Session = createSession(response: sessionDictionary)
+        let player: Player = Player(id: id, username: username, session: session, role: role, score: score)
+        
+        Aldo.setPlayer(player: player)
     }
     
 }
