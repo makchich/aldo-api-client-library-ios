@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-public enum AldoRequest: String {
+public enum RequestURI: String {
     case REQUEST_EMPTY = "/"
     case REQUEST_AUTH_TOKEN = "/token"
     
@@ -34,36 +34,47 @@ public enum AldoRequest: String {
         case .SESSION_INFO:
             return "\(self.rawValue)$"
         case .PLAYER_USERNAME_UPDATE:
-            return String(format: self.rawValue, "(.)+?")
+            return String(format: self.rawValue, "(.)+?$")
         default:
             return self.rawValue
         }
     }
 }
 
-open class Aldo {
+public protocol AldoRequester {
+    static func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback?)
+}
+
+public class Aldo: AldoRequester {
     
-    private static let storage = UserDefaults.standard
     public enum Keys: String {
         case AUTH_TOKEN = "AUTH_TOKEN"
         case SESSION = "SESSION"
     }
     
-    private static var HOST_ADDRESS: String = "127.0.0.1"
-    private static var PORT: Int = 4567
+    static let storage = UserDefaults.standard
     
-    private static var ID: String = UIDevice.current.identifierForVendor!.uuidString
+    static var hostAddress: String = "127.0.0.1"
+    static let defaultPort: Int = 4567
+    static var port: Int = 0
     
-    open class func setHostAddress(address: String, port: Int = 4567) {
-        HOST_ADDRESS = address
-        PORT = port
+    static let ID: String = UIDevice.current.identifierForVendor!.uuidString
+    
+    public class func setHostAddress(address: String, excludePort: Bool = false) {
+        Aldo.hostAddress = address
+        Aldo.port = !excludePort ? defaultPort : 0
     }
     
-    open class func hasAuthToken() -> Bool {
+    public class func setHostAddress(address: String, port: Int) {
+        Aldo.hostAddress = address
+        Aldo.port = port
+    }
+    
+    public class func hasAuthToken() -> Bool {
         return storage.object(forKey: Keys.AUTH_TOKEN.rawValue) != nil
     }
     
-    open class func hasSession() -> Bool {
+    public class func hasActivePlayer() -> Bool {
         return storage.object(forKey: Keys.SESSION.rawValue) != nil
     }
     
@@ -71,30 +82,39 @@ open class Aldo {
         return storage
     }
     
-    open class func getStoredSession() -> AldoSession? {
+    public class func getPlayer() -> Player? {
         if let objSession = storage.object(forKey: Keys.SESSION.rawValue) {
             let sessionData = objSession as! Data
-            let session: AldoSession = NSKeyedUnarchiver.unarchiveObject(with: sessionData) as! AldoSession
+            let session: Player = NSKeyedUnarchiver.unarchiveObject(with: sessionData) as! Player
             return session
         }
         return nil
     }
     
-    open class func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
+    public class func setPlayer(player: Player) {
+        let playerData: Data = NSKeyedArchiver.archivedData(withRootObject: player)
+        Aldo.getStorage().set(playerData, forKey: Aldo.Keys.SESSION.rawValue)
+    }
+    
+    private class func createRequestHeaders() -> HTTPHeaders {
         let objToken = storage.object(forKey: Keys.AUTH_TOKEN.rawValue)
         let token: String = (objToken != nil) ? ":\(objToken as! String)" : ""
         
-        
-        var player: String = ""
-        if let session = Aldo.getStoredSession() {
-            player = ":\(session.getPlayerID())"
+        var playerId: String = ""
+        if let player = Aldo.getPlayer() {
+            playerId = ":\(player.getId())"
         }
         
-        let headers: HTTPHeaders = [
-            "Authorization": "\(ID)\(token)\(player)"
+        return [
+            "Authorization": "\(ID)\(token)\(playerId)"
         ]
+    }
+    
+    open class func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
+        let headers = createRequestHeaders()
+        let requestPort = (port <= 0) ? "" : ":\(port)"
         
-        Alamofire.request("\(HOST_ADDRESS)\(command)", method: method, parameters: parameters, encoding: AldoEncoding(), headers: headers).responseJSON { response in
+        Alamofire.request("\(hostAddress)\(requestPort)\(command)", method: method, parameters: parameters, encoding: AldoEncoding(), headers: headers).responseJSON { response in
             var result: NSDictionary = [:]
             if let JSON = response.result.value {
                 result = JSON as! NSDictionary
@@ -109,63 +129,63 @@ open class Aldo {
         }
     }
     
-    open class func requestAuthToken(callback: Callback? = nil) {
-        let command: String = AldoRequest.REQUEST_AUTH_TOKEN.rawValue
+    public class func requestAuthToken(callback: Callback? = nil) {
+        let command: String = RequestURI.REQUEST_AUTH_TOKEN.rawValue
         request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
-    open class func createSession(username: String, callback: Callback? = nil) {
-        let command: String = String(format: AldoRequest.SESSION_CREATE.rawValue, username)
+    public class func createSession(username: String, callback: Callback? = nil) {
+        let command: String = String(format: RequestURI.SESSION_CREATE.rawValue, username)
         request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
-    open class func joinSession(username: String, token: String, callback: Callback? = nil) {
-        let command: String = String(format: AldoRequest.SESSION_JOIN.rawValue, token, username)
+    public class func joinSession(username: String, token: String, callback: Callback? = nil) {
+        let command: String = String(format: RequestURI.SESSION_JOIN.rawValue, token, username)
         request(command: command, method: .post, parameters: [:], callback: callback)
     }
     
-    open class func requestSessionInfo(callback: Callback? = nil) {
-        let command: String = AldoRequest.SESSION_INFO.rawValue
+    public class func requestSessionInfo(callback: Callback? = nil) {
+        let command: String = RequestURI.SESSION_INFO.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    open class func requestSessionPlayers(callback: Callback? = nil) {
-        let command: String = AldoRequest.SESSION_PLAYERS.rawValue
+    public class func requestSessionPlayers(callback: Callback? = nil) {
+        let command: String = RequestURI.SESSION_PLAYERS.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    open class func changeSessionState(newState: AldoSession.State, callback: Callback? = nil) {
-        var command: String = AldoRequest.REQUEST_EMPTY.rawValue
+    public class func changeSessionStatus(newStatus: Session.Status, callback: Callback? = nil) {
+        var command: String = RequestURI.REQUEST_EMPTY.rawValue
         
-        switch newState {
-        case AldoSession.State.PLAY:
-            command = AldoRequest.SESSION_STATE_PLAY.rawValue
+        switch newStatus {
+        case Session.Status.PLAYING:
+            command = RequestURI.SESSION_STATE_PLAY.rawValue
             break
-        case AldoSession.State.PAUSE:
-            command = AldoRequest.SESSION_STATE_PAUSE.rawValue
+        case Session.Status.PAUSED:
+            command = RequestURI.SESSION_STATE_PAUSE.rawValue
             break
         }
         
         request(command: command, method: .put, parameters: [:], callback: callback)
     }
     
-    open class func deleteSession(callback: Callback? = nil) {
-        let command: String = AldoRequest.SESSION_DELETE.rawValue
+    public class func deleteSession(callback: Callback? = nil) {
+        let command: String = RequestURI.SESSION_DELETE.rawValue
         request(command: command, method: .delete, parameters: [:], callback: callback)
     }
     
-    open class func requestDevicePlayers(callback: Callback? = nil) {
-        let command: String = AldoRequest.PLAYER_ALL.rawValue
+    public class func requestDevicePlayers(callback: Callback? = nil) {
+        let command: String = RequestURI.PLAYER_ALL.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    open class func requestPlayerInfo(callback: Callback? = nil) {
-        let command: String = AldoRequest.PLAYER_INFO.rawValue
+    public class func requestPlayerInfo(callback: Callback? = nil) {
+        let command: String = RequestURI.PLAYER_INFO.rawValue
         request(command: command, method: .get, parameters: [:], callback: callback)
     }
     
-    open class func updateUsername(username: String, callback: Callback? = nil) {
-        let command: String = String(format: AldoRequest.PLAYER_USERNAME_UPDATE.rawValue, username)
+    public class func updateUsername(username: String, callback: Callback? = nil) {
+        let command: String = String(format: RequestURI.PLAYER_USERNAME_UPDATE.rawValue, username)
         request(command: command, method: .put, parameters: [:], callback: callback)
     }
 }
