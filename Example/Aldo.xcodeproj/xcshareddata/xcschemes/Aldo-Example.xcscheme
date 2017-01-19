@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "22D6E351316E600636DD825E5009CCC9"
+               BlueprintIdentifier = "3AA9C9551B4FCAEC177F571586499AF7"
                BuildableName = "Aldo.framework"
                BlueprintName = "Aldo"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
