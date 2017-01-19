@@ -14,11 +14,11 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-Aldo is available through [CocoaPods](http://cocoapods.org). To install
+Aldo is not yet available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "Aldo"
+pod "Aldo", :git => "https://github.com/makchich/aldo-api-client-library-ios"
 ```
 
 ## Authors
