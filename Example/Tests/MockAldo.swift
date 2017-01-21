@@ -12,27 +12,17 @@ public class MockAldo: Aldo {
         return Aldo.port
     }
     
-    override public class func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
+    override public class func request(uri: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
         var response: Dictionary<String, Any> = [:]
-        var components = command.components(separatedBy: "/")
+        var components = uri.components(separatedBy: "/")
         
-        switch command {
+        switch uri {
         case Regex(pattern: RequestURI.REQUEST_AUTH_TOKEN.regex()):
             response["deviceID"] = AldoTests.deviceId
             response["token"] = AldoTests.authToken
             break
         case Regex(pattern: RequestURI.SESSION_CREATE.regex()):
-            var tokens: Dictionary<String, String> = [:]
-            tokens["moderator"] = AldoTests.moderatorToken
-            tokens["user"] = AldoTests.userToken
-            
-            var session: Dictionary<String, Any> = createSessionResponse()
-            session["tokens"] = tokens
-            
-            response["playerID"] = AldoTests.playerId
-            response["session"] = session
-            response["role"] = Player.Role.ADMIN.rawValue
-            response["score"] = 0
+            response = createPlayerResponse(role: Player.Role.ADMIN)
             response["username"] = components[3]
             break
         case Regex(pattern: RequestURI.SESSION_JOIN.regex()):
@@ -43,15 +33,8 @@ public class MockAldo: Aldo {
             response["username"] = components[5]
             break
         case Regex(pattern: RequestURI.SESSION_INFO.regex()):
-            var tokens: Dictionary<String, String> = [:]
-            
-            if Aldo.getPlayer()!.isAdmin() {
-                tokens["moderator"] = AldoTests.moderatorToken
-                tokens["user"] = AldoTests.userToken
-            }
-            
-            response = createSessionResponse()
-            response["tokens"] = tokens
+            let player: Player = MockAldo.getPlayer()!
+            response = createSessionResponse(role: player.getRole())
             break
         case Regex(pattern: RequestURI.SESSION_PLAYERS.regex()):
             var players = [Dictionary<String, Any>]()
@@ -90,23 +73,41 @@ public class MockAldo: Aldo {
         default:
             break
         }
-        AldoMainCallback(callback: callback).onResponse(request: command, responseCode: 200, response: response as NSDictionary)
+        AldoMainCallback(callback: callback).onResponse(request: uri, responseCode: 200, response: response as NSDictionary)
     }
     
-    public static func createSessionResponse() -> Dictionary<String, Any> {
+    
+    /// Helper method to simulate the way the Aldo Framework
+    /// returns information about a session.
+    public static func createSessionResponse(role: Player.Role = Player.Role.USER) -> Dictionary<String, Any> {
         var response: Dictionary<String, Any> = [:]
         response["sessionID"] = AldoTests.sessionId
         response["adminID"] = AldoTests.playerId
         response["status"] = Session.Status.PLAYING.rawValue
         response["created"] = AldoTests.creationDate
+        
+        if role == Player.Role.ADMIN {
+            response["tokens"] = createTokensResponse()
+        }
         return response
     }
     
-    public static func createPlayerResponse() -> Dictionary<String, Any> {
+    /// Helper method to simulate the way the Aldo Framework
+    /// returns information about the join tokens of a session.
+    public static func createTokensResponse() -> Dictionary<String, Any> {
+        var response: Dictionary<String, String> = [:]
+        response["moderator"] = AldoTests.moderatorToken
+        response["user"] = AldoTests.userToken
+        return response
+    }
+    
+    /// Helper method to simulate the way the Aldo Framework
+    /// returns information about a player.
+    public static func createPlayerResponse(role: Player.Role = Player.Role.USER) -> Dictionary<String, Any> {
         var response: Dictionary<String, Any> = [:]
         response["playerID"] = AldoTests.playerId
-        response["session"] = createSessionResponse()
-        response["role"] = Player.Role.USER.rawValue
+        response["session"] = createSessionResponse(role: role)
+        response["role"] = role.rawValue
         response["score"] = 0
         response["username"] = AldoTests.username
         return response
