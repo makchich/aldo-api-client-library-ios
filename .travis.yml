@@ -13,6 +13,8 @@ notifications:
   email: false
 
 before_install:
+  - brew update
+  - brew install swiftlint
   - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
 
 script:

@@ -14,7 +14,7 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		607FACEC1AFB9204008FA782 /* AldoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* AldoTests.swift */; };
 		CA97A744DB6F3A8DFDFAA9DA /* Pods_Aldo_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DB0C9C2A7159920FE53487F /* Pods_Aldo_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +43,7 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* Aldo_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Aldo_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		607FACEB1AFB9204008FA782 /* AldoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AldoTests.swift; sourceTree = "<group>"; };
 		843EDCC61C05B064AFA58CB7 /* Aldo.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Aldo.podspec; path = ../Aldo.podspec; sourceTree = "<group>"; };
 		B1B5E17345D299CD647585FC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		CADA041DCA433E46F7746FB7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				607FACEB1AFB9204008FA782 /* AldoTests.swift */,
 				3F4077471E21825A00244596 /* MockAldo.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -175,6 +175,7 @@
 				607FACCE1AFB9204008FA782 /* Resources */,
 				73E2F6C161D25C2D23A81C8F /* [CP] Embed Pods Frameworks */,
 				2E10A335E61B23E5B3155A29 /* [CP] Copy Pods Resources */,
+				3F193A8D1E3374560001CFA1 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -297,6 +298,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Aldo_Example/Pods-Aldo_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		3F193A8D1E3374560001CFA1 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint lint --path ../ --config ../.swiftlint.yml\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
 		43BCE9E39CEE8FECE10C70CF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,7 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				607FACEC1AFB9204008FA782 /* AldoTests.swift in Sources */,
 				3F4077491E21921B00244596 /* MockAldo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

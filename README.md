@@ -2,9 +2,9 @@
 
 [![CI Status](http://img.shields.io/travis/makchich/aldo-api-client-library-ios.svg?style=flat)](https://travis-ci.org/makchich/aldo-api-client-library-ios)
 [![codecov](https://codecov.io/gh/makchich/aldo-api-client-library-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/makchich/aldo-api-client-library-ios)
-[![Version](https://img.shields.io/cocoapods/v/Aldo.svg?style=flat)](http://cocoapods.org/pods/Aldo)
-[![License](https://img.shields.io/cocoapods/l/Aldo.svg?style=flat)](http://cocoapods.org/pods/Aldo)
-[![Platform](https://img.shields.io/cocoapods/p/Aldo.svg?style=flat)](http://cocoapods.org/pods/Aldo)
+[![Swift Code](https://img.shields.io/badge/language-swift-yellow.svg)](https://codecov.io/gh/makchich/aldo-api-client-library-ios)
+[![Platform](https://img.shields.io/badge/platform-ios-yellow.svg)](https://codecov.io/gh/makchich/aldo-api-client-library-ios)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/makchich/aldo-api-client-library-ios/blob/master/LICENSE)
 
 ## Example
 

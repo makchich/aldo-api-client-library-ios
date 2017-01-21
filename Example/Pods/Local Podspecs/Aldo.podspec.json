@@ -1,6 +1,6 @@
 {
   "name": "Aldo",
-  "version": "0.5.2",
+  "version": "0.7.0",
   "summary": "Aldo APIs Client Library for iOS.",
   "homepage": "https://github.com/makchich/aldo-api-client-library-ios",
   "license": {
@@ -15,7 +15,7 @@
   },
   "source": {
     "git": "https://github.com/makchich/aldo-api-client-library-ios.git",
-    "tag": "0.5.2"
+    "tag": "0.7.0"
   },
   "platforms": {
     "ios": "8.0"

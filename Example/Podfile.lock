@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.3.0)
-  - Aldo (0.5.2):
+  - Aldo (0.7.0):
     - Alamofire (~> 4.0)
 
 DEPENDENCIES:
@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
-  Aldo: 6e9e2007ce4247e2caaa4eb6ef2ee0ea2c3cf378
+  Aldo: e8895eb74d194844ee44f7a54e57bef047a4e2c1
 
 PODFILE CHECKSUM: eb01127b9cdf649b94c638c53a24861f4c09b250
 
