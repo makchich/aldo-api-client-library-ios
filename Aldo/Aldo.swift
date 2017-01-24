@@ -96,8 +96,7 @@ public class Aldo: AldoRequester {
     static let storage = UserDefaults.standard
 
     static var hostAddress: String = "127.0.0.1"
-    static let defaultPort: Int = 4567
-    static var port: Int = 0
+    static var baseAddress: String = "127.0.0.1"
 
     static let id: String = UIDevice.current.identifierForVendor!.uuidString
 
@@ -105,24 +104,19 @@ public class Aldo: AldoRequester {
         Define the address of the server running the Aldo Framework.
      
         - Parameters:
-            - address: the address of the server running the Aldo Framework **without** a / at the end.
-            - excludePort: wether or not to concatenate the port to the address.
+            - address: the address of the server running the Aldo Framework
+                       including port and **without** a / at the end.
     */
-    public class func setHostAddress(address: String, excludePort: Bool = false) {
-        Aldo.hostAddress = address
-        Aldo.port = !excludePort ? defaultPort : 0
-    }
+    public class func setHostAddress(address: String) {
+        if let url = URL(string: address) {
+            let host = url.host
+            let port = url.port != nil ? ":\(url.port)" : ""
 
-    /**
-        Define the address of the server running the Aldo Framework.
-     
-        - Parameters:
-            - address: the address of the server running the Aldo Framework **without** a / at the end.
-            - port: the port number the Aldo Framework is listening to.
-     */
-    public class func setHostAddress(address: String, port: Int) {
-        Aldo.hostAddress = address
-        Aldo.port = port
+            hostAddress = address
+            baseAddress = "\(host)\(port)"
+        }
+        //hostAddress.asURL().s
+        //baseAddress =
     }
 
     /**
@@ -172,10 +166,8 @@ public class Aldo: AldoRequester {
         Aldo.getStorage().set(playerData, forKey: Aldo.Keys.SESSION.rawValue)
     }
 
-    /**
-        Private helper method to create the Authorization header for a request.
-     */
-    private class func createRequestHeaders() -> HTTPHeaders {
+    /// Helper method creating the value of the Authorization header used for a request.
+    class func getAuthorizationHeaderValue() -> String {
         let objToken = storage.object(forKey: Keys.AUTH_TOKEN.rawValue)
         let token: String = (objToken != nil) ? ":\(objToken as! String)" : ""
 
@@ -184,9 +176,7 @@ public class Aldo: AldoRequester {
             playerId = ":\(player.getId())"
         }
 
-        return [
-            "Authorization": "\(id)\(token)\(playerId)"
-        ]
+        return "\(id)\(token)\(playerId)"
     }
 
     /**
@@ -200,10 +190,11 @@ public class Aldo: AldoRequester {
                         when a response is returned from the Aldo Framework.
      */
     open class func request(uri: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
-        let headers = createRequestHeaders()
-        let requestPort = (port <= 0) ? "" : ":\(port)"
+        let headers = [
+            "Authorization": getAuthorizationHeaderValue()
+        ]
 
-        Alamofire.request("\(hostAddress)\(requestPort)\(uri)", method: method,
+        Alamofire.request("\(hostAddress)\(uri)", method: method,
                           parameters: parameters, encoding: AldoEncoding(),
                           headers: headers).responseJSON { response in
             var result: NSDictionary = [:]
@@ -219,6 +210,26 @@ public class Aldo: AldoRequester {
             AldoMainCallback(callback: callback).onResponse(request: uri,
                                                             responseCode: responseCode, response: result)
         }
+    }
+
+    /**
+     Opens a websocket connection with the Aldo Framework.
+     
+     - Parameters:
+        - path: The path to subscribe to
+        - callback: A realization of the Callback protocol to be called
+                 when a response is returned from the Aldo Framework.
+     
+     - Returns: An instance of *AldoWebSocket* representing the connection or
+                *nil* if the connection could not be made.
+     */
+    public class func subscribe(path: String, callback: Callback) -> AldoWebSocket? {
+        if let url = URL(string: "ws://\(baseAddress)\(path)") {
+            let socket = AldoWebSocket(path: path, url: url, callback: callback)
+            socket.connect()
+            return socket
+        }
+        return nil
     }
 
     /**
