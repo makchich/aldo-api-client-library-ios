@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Aldo'
-  s.version          = '0.8.0'
+  s.version          = '0.9.0'
   s.summary          = 'Aldo APIs Client Library for iOS.'
 
 # This description is used to generate tags and improve search results.
@@ -32,6 +32,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Aldo/*.swift'
 
   s.dependency 'Alamofire', '~> 4.0'
+  s.dependency 'Starscream', '~> 2.0.0'
 
   # s.resource_bundles = {
   #   'Aldo' => ['Aldo/Assets/*.png']
