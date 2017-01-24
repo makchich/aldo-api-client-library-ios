@@ -1,11 +1,14 @@
 PODS:
   - Alamofire (4.3.0)
-  - Aldo (0.7.0):
+  - Aldo (0.8.0):
     - Alamofire (~> 4.0)
+    - Starscream (~> 2.0.0)
+  - Starscream (2.0.2)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - Aldo (from `../`)
+  - Starscream (~> 2.0.0)
 
 EXTERNAL SOURCES:
   Aldo:
@@ -13,8 +16,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
-  Aldo: e8895eb74d194844ee44f7a54e57bef047a4e2c1
+  Aldo: 8fd3c03bda72f117f5c471d02868ca2a2f57a1cb
+  Starscream: 6c135a34e0a6e60cedaa0b30db67a4c05cf7cd38
 
-PODFILE CHECKSUM: eb01127b9cdf649b94c638c53a24861f4c09b250
+PODFILE CHECKSUM: 3b52e247bab4ef8d3fb8a07d2fa1d13287b3cc0f
 
 COCOAPODS: 1.1.1
