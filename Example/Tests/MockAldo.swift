@@ -4,8 +4,19 @@ import Alamofire
 
 public class MockAldo: Aldo {
     
+    /// Gets the id of the device used for authorization.
+    public class func getDeviceId() -> String {
+        return Aldo.id
+    }
+    
+    /// Gets the host address of the Aldo Framework.
     public class func getHostAddress() -> String {
         return Aldo.hostAddress
+    }
+    
+    /// Gets the host name of the Aldo Framework including port
+    public class func getBaseAddress() -> String {
+        return Aldo.baseAddress
     }
     
     override public class func request(uri: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {

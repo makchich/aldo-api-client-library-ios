@@ -109,8 +109,8 @@ public class Aldo: AldoRequester {
     */
     public class func setHostAddress(address: String) {
         if let url = URL(string: address) {
-            let host = url.host
-            let port = url.port != nil ? ":\(url.port)" : ""
+            let host = url.host != nil ? url.host! : address
+            let port = url.port != nil ? ":\(url.port!)" : ""
 
             hostAddress = address
             baseAddress = "\(host)\(port)"

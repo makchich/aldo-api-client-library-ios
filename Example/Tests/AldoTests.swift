@@ -4,8 +4,6 @@ import XCTest
 
 class AldoTests: XCTestCase, Callback {
 
-    let address: String = "127.0.0.1"
-
     public static let deviceId = "IPHONE_SIM_DEVICE_ID"
     public static let authToken = "1111-2222-3333-4444-5555"
 
@@ -17,6 +15,10 @@ class AldoTests: XCTestCase, Callback {
     public static let creationDate = "1970-01-01T00:00:00.000"
     public static let moderatorToken = "acegik"
     public static let userToken = "bdfhj"
+
+    let address: String = "127.0.0.1"
+    let httpAddress: String = "http://127.0.0.1:4567"
+    let baseAddress: String = "127.0.0.1:4567"
 
     override func setUp() {
         super.setUp()
@@ -85,6 +87,11 @@ class AldoTests: XCTestCase, Callback {
         XCTAssertEqual(MockAldo.getHostAddress(), address)
     }
     
+    func testAldoBaseAddress() {
+        MockAldo.setHostAddress(address: httpAddress)
+        XCTAssertEqual(MockAldo.getBaseAddress(), baseAddress)
+    }
+    
     func testRequestAuthToken() {
         XCTAssertFalse(MockAldo.hasAuthToken())
         MockAldo.requestAuthToken()
@@ -97,6 +104,23 @@ class AldoTests: XCTestCase, Callback {
         XCTFail()
     }
     
+    func testAuthorizationHeaderValue() {
+        var value: String = MockAldo.getAuthorizationHeaderValue()
+        var exp: String = MockAldo.getDeviceId()
+        XCTAssertEqual(value, exp)
+        
+        testRequestAuthToken()
+        
+        value = MockAldo.getAuthorizationHeaderValue()
+        exp = "\(MockAldo.getDeviceId()):\(AldoTests.authToken)"
+        XCTAssertEqual(value, exp)
+        
+        testJoinSessionAsUser()
+        
+        value = MockAldo.getAuthorizationHeaderValue()
+        exp = "\(MockAldo.getDeviceId()):\(AldoTests.authToken):\(AldoTests.playerId)"
+        XCTAssertEqual(value, exp)
+    }
     
     func testCreateSession() {
         XCTAssertFalse(MockAldo.hasActivePlayer())
