@@ -9,193 +9,350 @@
 import Foundation
 import Alamofire
 
-public class Aldo {
-    
-    private static let storage = UserDefaults.standard
-    private static let authTokenStorageKey = "AUTH_TOKEN"
-    
-    private static var HOST_ADDRESS: String = "127.0.0.1"
-    private static var PORT: Int = 4567
-    
-    private static var ID: String = UIDevice.current.identifierForVendor!.uuidString
-    
-    private enum Keys: String {
-        case AUTH_TOKEN = "AUTH_TOKEN"
-        case SESSION = "SESSION"
-    }
-    
-    private enum Command: String {
-        case REQUEST_AUTH_TOKEN = "/token"
-        case SESSION_CREATE = "/session/username/"
-        case SESSION_JOIN = "/session/join/%@/username/%@"
-        case SESSION_DELETE = "/session/delete"
-        case SESSION_PLAYERS = "/session/players"
-    }
-    
-    public static func setHostAddress(address: String, port: Int = 4567) {
-        HOST_ADDRESS = address
-        PORT = port
-    }
-    
-    public static func request(command: String, method: HTTPMethod, parameters: Parameters, callback: Callback) {
-        let objToken = storage.object(forKey: Keys.AUTH_TOKEN.rawValue)
-        let token: String = (objToken != nil) ? ":\(objToken as! String)" : ""
-        
-        
-        var player: String = ""
-        if let session = Aldo.getSession() {
-            player = ":\(session.getPlayerID())"
+/**
+    All core URI requests that are being processed by the Aldo Framework.
+ */
+public enum RequestURI: String {
+
+    /// Dummy URI.
+    case REQUEST_EMPTY = "/"
+
+    /// URI to request and authorization token.
+    case REQUEST_AUTH_TOKEN = "/token"
+
+    /// URI template to create a session.
+    case SESSION_CREATE = "/session/username/%@"
+
+    /// URI template to join a session.
+    case SESSION_JOIN = "/session/join/%@/username/%@"
+
+    /// URI to get the information about the session.
+    case SESSION_INFO = "/session"
+
+    /// URI to get the players that have joined the session.
+    case SESSION_PLAYERS = "/session/players"
+
+    /// URI to resume the session.
+    case SESSION_STATE_PLAY = "/session/play"
+
+    /// URI to pause the session.
+    case SESSION_STATE_PAUSE = "/session/pause"
+
+    /// URI to stop and delete the session.
+    case SESSION_DELETE = "/session/delete"
+
+    /// URI to get all players linked to the device.
+    case PLAYER_ALL = "/player/all"
+
+    /// URI to get information of the active player.
+    case PLAYER_INFO = "/player"
+
+    /// URI template to update the username of the active player.
+    case PLAYER_USERNAME_UPDATE = "/player/username/%@"
+
+    /**
+        Converts the rawValue to one containing regular expression for comparison.
+     
+        - Returns: A *String* representation as regular expression.
+     */
+    public func regex() -> String {
+        var regex: String = "(.)+?"
+        if self == .PLAYER_USERNAME_UPDATE {
+            regex = "(.)+?$"
         }
-        
-        let headers: HTTPHeaders = [
-            "Authorization": "\(ID)\(token)\(player)"
-        ]
-        
-        Alamofire.request("\(HOST_ADDRESS)\(command)", method: method, parameters: parameters, headers: headers).responseJSON { response in
-            
-            var result: NSDictionary = [:]
-            if let JSON = response.result.value {
-                result = JSON as! NSDictionary
-            }
-            let statusCode: Int = response.response!.statusCode
-            callback.onResponse(responseCode: statusCode, response: result)
+        return "\(self.rawValue.replacingOccurrences(of: "%@", with: regex))$"
+    }
+}
+
+/**
+    Protocol for sending a request to the Aldo Framework.
+ */
+public protocol AldoRequester {
+
+    /**
+        Senda a request to the server running the Aldo Framework.
+     
+        - Parameters:
+            - uri: The request to be send.
+            - method: The HTTP method to be used for the request.
+            - parameters: The information that should be passed in the body
+            - callback: A realization of the Callback protocol to be called
+                        when a response is returned from the Aldo Framework.
+     */
+    static func request(uri: String, method: HTTPMethod, parameters: Parameters, callback: Callback?)
+}
+
+/**
+    Class containing static methods to communicate with the Aldo Framework.
+ */
+public class Aldo: AldoRequester {
+
+    /// Keys for data storage
+    public enum Keys: String {
+        case AUTH_TOKEN
+        case SESSION
+    }
+
+    static let storage = UserDefaults.standard
+
+    static var hostAddress: String = "127.0.0.1"
+    static var baseAddress: String = "127.0.0.1"
+
+    static let id: String = UIDevice.current.identifierForVendor!.uuidString
+
+    /**
+        Define the address of the server running the Aldo Framework.
+     
+        - Parameters:
+            - address: the address of the server running the Aldo Framework
+                       including port and **without** a / at the end.
+    */
+    public class func setHostAddress(address: String) {
+        if let url = URL(string: address) {
+            let host = url.host != nil ? url.host! : address
+            let port = url.port != nil ? ":\(url.port!)" : ""
+
+            hostAddress = address
+            baseAddress = "\(host)\(port)"
         }
+        //hostAddress.asURL().s
+        //baseAddress =
     }
-    
-    public static func requestAuthToken(callback: Callback) {
-        let command: Command = Command.REQUEST_AUTH_TOKEN
-        let authTokenCallback: Callback = AuthTokenCallback(callback: callback)
-        
-        request(command: command.rawValue, method: .post, parameters: [:], callback: authTokenCallback)
-    }
-    
-    public static func hasAuthToken() -> Bool {
+
+    /**
+        Checks whether the device already has an authorization token or not.
+     
+        - Returns: *true* if having a token, otherwise *false*.
+    */
+    public class func hasAuthToken() -> Bool {
         return storage.object(forKey: Keys.AUTH_TOKEN.rawValue) != nil
     }
-    
-    public static func createSession(username: String, callback: Callback) {
-        let command: String = "\(Command.SESSION_CREATE.rawValue)\(username)"
-        let createSessionCallback: Callback = CreateSessionCallback(username: username, callback: callback)
-        
-        request(command: command, method: .post, parameters: [:], callback: createSessionCallback)
-    }
-    
-    public static func joinSession(username: String, token: String, callback: Callback) {
-        let command: String = String(format: Command.SESSION_JOIN.rawValue, token, username)
-        let joinSessionCallback: Callback = JoinSessionCallback(username: username, callback: callback)
-        
-        request(command: command, method: .post, parameters: [:], callback: joinSessionCallback)
-    }
-    
-    public static func deleteSession(callback: Callback) {
-        let command: String = Command.SESSION_DELETE.rawValue
-        let deleteSessionCallback: Callback = DeleteSessionCallback(callback: callback)
-        
-        request(command: command, method: .delete, parameters: [:], callback: deleteSessionCallback)
-    }
-    
-    public static func getSessionPlayers(callback: Callback) {
-        let command: String = Command.SESSION_PLAYERS.rawValue
-        request(command: command, method: .get, parameters: [:], callback: callback)
-    }
-    
-    public static func hasSession() -> Bool {
+
+    /**
+        Checks wether the device has a information about a player in a session.
+     
+        - Returns: *true* if having information about a player, otherwise *false*.
+    */
+    public class func hasActivePlayer() -> Bool {
         return storage.object(forKey: Keys.SESSION.rawValue) != nil
     }
-    
-    public static func getSession() -> AldoSession? {
+
+    /**
+        Retrieves the storage where the information retrieved from the Aldo Framework is stored.
+     
+        - Returns: an instance of *UserDefaults*
+     */
+    public class func getStorage() -> UserDefaults {
+        return storage
+    }
+
+    /**
+        Retrieves the stored information about an active player.
+     
+        - Returns: an instance of *Player* if available, otherwise *nil*
+     */
+    public class func getPlayer() -> Player? {
         if let objSession = storage.object(forKey: Keys.SESSION.rawValue) {
             let sessionData = objSession as! Data
-            let session: AldoSession = NSKeyedUnarchiver.unarchiveObject(with: sessionData) as! AldoSession
+            let session: Player = NSKeyedUnarchiver.unarchiveObject(with: sessionData) as! Player
             return session
         }
         return nil
     }
-    
-    private class AuthTokenCallback: Callback {
-        
-        private var callback: Callback
-        
-        public init(callback: Callback) {
-            self.callback = callback
+
+    /// Stores information about an active player.
+    public class func setPlayer(player: Player) {
+        let playerData: Data = NSKeyedArchiver.archivedData(withRootObject: player)
+        Aldo.getStorage().set(playerData, forKey: Aldo.Keys.SESSION.rawValue)
+    }
+
+    /// Helper method creating the value of the Authorization header used for a request.
+    class func getAuthorizationHeaderValue() -> String {
+        let objToken = storage.object(forKey: Keys.AUTH_TOKEN.rawValue)
+        let token: String = (objToken != nil) ? ":\(objToken as! String)" : ""
+
+        var playerId: String = ""
+        if let player = Aldo.getPlayer() {
+            playerId = ":\(player.getId())"
         }
-        
-        public func onResponse(responseCode: Int, response: NSDictionary) {
-            if(responseCode == 200) {
-                storage.set(response["token"], forKey: Keys.AUTH_TOKEN.rawValue)
+
+        return "\(id)\(token)\(playerId)"
+    }
+
+    /**
+        Senda a request to the server running the Aldo Framework.
+     
+        - Parameters:
+            - uri: The request to be send.
+            - method: The HTTP method to be used for the request.
+            - parameters: The information that should be passed in the body
+            - callback: A realization of the Callback protocol to be called
+                        when a response is returned from the Aldo Framework.
+     */
+    open class func request(uri: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
+        let headers = [
+            "Authorization": getAuthorizationHeaderValue()
+        ]
+
+        Alamofire.request("\(hostAddress)\(uri)", method: method,
+                          parameters: parameters, encoding: AldoEncoding(),
+                          headers: headers).responseJSON { response in
+            var result: NSDictionary = [:]
+            if let JSON = response.result.value {
+                result = JSON as! NSDictionary
             }
-            callback.onResponse(responseCode: responseCode, response: response)
+
+            var responseCode: Int = 499
+            if let httpResponse = response.response {
+                responseCode = httpResponse.statusCode
+            }
+
+            AldoMainCallback(callback: callback).onResponse(request: uri,
+                                                            responseCode: responseCode, response: result)
         }
     }
-    
-    private class CreateSessionCallback: Callback {
-        
-        private var username: String
-        private var callback: Callback
-        
-        public init(username: String, callback: Callback) {
-            self.username = username
-            self.callback = callback
+
+    /**
+     Opens a websocket connection with the Aldo Framework.
+     
+     - Parameters:
+        - path: The path to subscribe to
+        - callback: A realization of the Callback protocol to be called
+                 when a response is returned from the Aldo Framework.
+     
+     - Returns: An instance of *AldoWebSocket* representing the connection or
+                *nil* if the connection could not be made.
+     */
+    public class func subscribe(path: String, callback: Callback) -> AldoWebSocket? {
+        if let url = URL(string: "ws://\(baseAddress)\(path)") {
+            let socket = AldoWebSocket(path: path, url: url, callback: callback)
+            socket.connect()
+            return socket
         }
-        
-        public func onResponse(responseCode: Int, response: NSDictionary) {
-            if(responseCode == 200) {
-                let data: [String: String] = [
-                    "sessionID": response["sessionID"] as! String,
-                    "playerID": response["playerID"] as! String,
-                    "modToken": response["modToken"] as! String,
-                    "userToken": response["userToken"] as! String,
-                    "username": username
-                ]
-                let session: AldoSession = AldoSession(data: data)
-                let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
-                storage.set(sessionData, forKey: Keys.SESSION.rawValue)
-            }
-            callback.onResponse(responseCode: responseCode, response: response)
-        }
+        return nil
     }
-    
-    private class JoinSessionCallback: Callback {
-        
-        private var username: String
-        private var callback: Callback
-        
-        public init(username: String, callback: Callback) {
-            self.username = username
-            self.callback = callback
-        }
-        
-        public func onResponse(responseCode: Int, response: NSDictionary) {
-            if(responseCode == 200) {
-                let data: [String: String] = [
-                    "sessionID": response["sessionID"] as! String,
-                    "playerID": response["playerID"] as! String,
-                    "modToken": "",
-                    "userToken": "",
-                    "username": username
-                ]
-                let session: AldoSession = AldoSession(data: data)
-                let sessionData: Data = NSKeyedArchiver.archivedData(withRootObject: session)
-                storage.set(sessionData, forKey: Keys.SESSION.rawValue)
-            }
-            callback.onResponse(responseCode: responseCode, response: response)
-        }
+
+    /**
+        Sends a request to obtain an authorization token.
+     
+        - Parameter callback: A realization of the Callback protocol to be called
+                              when a response is returned from the Aldo Framework.
+    */
+    public class func requestAuthToken(callback: Callback? = nil) {
+        let command: String = RequestURI.REQUEST_AUTH_TOKEN.rawValue
+        request(uri: command, method: .post, parameters: [:], callback: callback)
     }
-    
-    private class DeleteSessionCallback: Callback {
-        
-        private var callback: Callback
-        
-        public init(callback: Callback) {
-            self.callback = callback
+
+    /**
+        Sends a request to create a session.
+     
+        - Parameters:
+            - username: The username to be used.
+            - callback: A realization of the Callback protocol to be called
+                        when a response is returned from the Aldo Framework.
+     */
+    public class func createSession(username: String, callback: Callback? = nil) {
+        let command: String = String(format: RequestURI.SESSION_CREATE.rawValue, username)
+        request(uri: command, method: .post, parameters: [:], callback: callback)
+    }
+
+    /**
+        Sends a request to join a session.
+     
+        - Parameters:
+            - username: The username to be used.
+            - token: The token to join a session.
+            - callback: A realization of the Callback protocol to be called
+                        when a response is returned from the Aldo Framework.
+     */
+    public class func joinSession(username: String, token: String, callback: Callback? = nil) {
+        let command: String = String(format: RequestURI.SESSION_JOIN.rawValue, token, username)
+        request(uri: command, method: .post, parameters: [:], callback: callback)
+    }
+
+    /**
+        Sends a request to retrieve information about the session.
+     
+        - Parameter callback: A realization of the Callback protocol to be called
+                              when a response is returned from the Aldo Framework.
+     */
+    public class func requestSessionInfo(callback: Callback? = nil) {
+        let command: String = RequestURI.SESSION_INFO.rawValue
+        request(uri: command, method: .get, parameters: [:], callback: callback)
+    }
+
+    /**
+        Sends a request to retrieve the players in the session.
+     
+        - Parameter callback: A realization of the Callback protocol to be called
+                              when a response is returned from the Aldo Framework.
+     */
+    public class func requestSessionPlayers(callback: Callback? = nil) {
+        let command: String = RequestURI.SESSION_PLAYERS.rawValue
+        request(uri: command, method: .get, parameters: [:], callback: callback)
+    }
+
+    /**
+        Sends a request to change the status of the session.
+     
+        - Parameters:
+            - newStatus: The new status of the session.
+            - callback: A realization of the Callback protocol to be called
+                        when a response is returned from the Aldo Framework.
+     */
+    public class func changeSessionStatus(newStatus: Session.Status, callback: Callback? = nil) {
+        var command: String = RequestURI.SESSION_STATE_PLAY.rawValue
+
+        if newStatus == Session.Status.PAUSED {
+            command = RequestURI.SESSION_STATE_PAUSE.rawValue
         }
-        
-        public func onResponse(responseCode: Int, response: NSDictionary) {
-            if(responseCode == 200) {
-                storage.removeObject(forKey: Keys.SESSION.rawValue)
-            }
-            
-            callback.onResponse(responseCode: responseCode, response: response)
-        }
+
+        request(uri: command, method: .put, parameters: [:], callback: callback)
+    }
+
+    /**
+        Sends a request to delete the session.
+     
+        - Parameter callback: A realization of the Callback protocol to be called
+                              when a response is returned from the Aldo Framework.
+     */
+    public class func deleteSession(callback: Callback? = nil) {
+        let command: String = RequestURI.SESSION_DELETE.rawValue
+        request(uri: command, method: .delete, parameters: [:], callback: callback)
+    }
+
+    /**
+        Sends a request to retrieve the players linked to the device.
+     
+        - Parameter callback: A realization of the Callback protocol to be called
+                              when a response is returned from the Aldo Framework.
+     */
+    public class func requestDevicePlayers(callback: Callback? = nil) {
+        let command: String = RequestURI.PLAYER_ALL.rawValue
+        request(uri: command, method: .get, parameters: [:], callback: callback)
+    }
+
+    /**
+        Sends a request to retrieve information about the player.
+     
+        - Parameter callback: A realization of the Callback protocol to be called
+                              when a response is returned from the Aldo Framework.
+     */
+    public class func requestPlayerInfo(callback: Callback? = nil) {
+        let command: String = RequestURI.PLAYER_INFO.rawValue
+        request(uri: command, method: .get, parameters: [:], callback: callback)
+    }
+
+    /**
+        Sends a request to change the username of the player.
+     
+        - Parameters:
+            - username: The username to be used.
+            - callback: A realization of the Callback protocol to be called
+                        when a response is returned from the Aldo Framework.
+     */
+    public class func updateUsername(username: String, callback: Callback? = nil) {
+        let command: String = String(format: RequestURI.PLAYER_USERNAME_UPDATE.rawValue, username)
+        request(uri: command, method: .put, parameters: [:], callback: callback)
     }
 }

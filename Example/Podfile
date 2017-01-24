@@ -1,13 +1,11 @@
 use_frameworks!
 
 target 'Aldo_Example' do
-  pod 'SwiftLint'  
   pod 'Alamofire', '~> 4.0'
+  pod 'Starscream', '~> 2.0.0'
   pod 'Aldo', :path => '../'
 
   target 'Aldo_Tests' do
     inherit! :search_paths
-
-    
   end
 end

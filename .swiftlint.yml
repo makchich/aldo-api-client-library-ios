@@ -1,0 +1,10 @@
+disabled_rules:
+  - force_cast
+included:
+  - Aldo
+excluded:
+  - Example
+variable_name:
+  excluded:
+    - id
+reporter: "xcode"

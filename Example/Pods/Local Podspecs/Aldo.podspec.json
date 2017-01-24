@@ -1,6 +1,6 @@
 {
   "name": "Aldo",
-  "version": "0.3.3",
+  "version": "0.8.0",
   "summary": "Aldo APIs Client Library for iOS.",
   "homepage": "https://github.com/makchich/aldo-api-client-library-ios",
   "license": {
@@ -15,7 +15,7 @@
   },
   "source": {
     "git": "https://github.com/makchich/aldo-api-client-library-ios.git",
-    "tag": "0.3.3"
+    "tag": "0.8.0"
   },
   "platforms": {
     "ios": "8.0"
@@ -24,6 +24,9 @@
   "dependencies": {
     "Alamofire": [
       "~> 4.0"
+    ],
+    "Starscream": [
+      "~> 2.0.0"
     ]
   }
 }
