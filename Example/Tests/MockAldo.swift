@@ -8,10 +8,6 @@ public class MockAldo: Aldo {
         return Aldo.hostAddress
     }
     
-    public class func getPort() -> Int {
-        return Aldo.port
-    }
-    
     override public class func request(uri: String, method: HTTPMethod, parameters: Parameters, callback: Callback? = nil) {
         var response: Dictionary<String, Any> = [:]
         var components = uri.components(separatedBy: "/")
