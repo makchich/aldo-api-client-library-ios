@@ -3,23 +3,21 @@ import XCTest
 @testable import Aldo
 
 class AldoTests: XCTestCase, Callback {
-    
+
+    let address: String = "127.0.0.1"
+
     public static let deviceId = "IPHONE_SIM_DEVICE_ID"
     public static let authToken = "1111-2222-3333-4444-5555"
-    
+
     public static let playerId = "1111-3333-5555-7777-9999"
     public static let username = "ORIGINAL_USERNAME"
     public static let changedUsername = "CHANGED_USERNAME"
-    
+
     public static let sessionId = "0000-2222-4444-6666-8888"
     public static let creationDate = "1970-01-01T00:00:00.000"
     public static let moderatorToken = "acegik"
     public static let userToken = "bdfhj"
-    
-    let address: String = "127.0.0.1"
-    let defaultPort: Int = 4567
-    let port: Int = 8000
-    
+
     override func setUp() {
         super.setUp()
         
@@ -84,23 +82,7 @@ class AldoTests: XCTestCase, Callback {
     
     func testAldoHostSetup() {
         MockAldo.setHostAddress(address: address)
-        
         XCTAssertEqual(MockAldo.getHostAddress(), address)
-        XCTAssertEqual(MockAldo.getPort(), defaultPort)
-    }
-    
-    func testAldoHostSetupWithCustomPort() {
-        MockAldo.setHostAddress(address: address, port: port)
-        
-        XCTAssertEqual(MockAldo.getHostAddress(), address)
-        XCTAssertEqual(MockAldo.getPort(), port)
-    }
-    
-    func testAldoHostSetupWithoutPort() {
-        MockAldo.setHostAddress(address: address, excludePort: true)
-        
-        XCTAssertEqual(MockAldo.getHostAddress(), address)
-        XCTAssertEqual(MockAldo.getPort(), 0)
     }
     
     func testRequestAuthToken() {
